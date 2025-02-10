@@ -1,0 +1,168 @@
+Section 26 of https://www.udemy.com/course/zero-to-hero-in-selenium-webdriver-java-basics-to-advance/learn/lecture/40222346#search
+
+
+											Framework Development
+------------------------------------------------------------------------------------------------------------------------
+Automation-Framework Project in Eclipse
+
+Objective
+	- To Automate a Web Application, no matter which technology is used for development
+	- Easy to understand and maintain
+	- Implement all the tools learned so far
+	- Follows Coding and Automation standards / best practices
+	
+Framework Features
+	- Browser independent - supports all the current browsers for test execution
+	- Supports test execution for different environments such as Testing, Staging and Production
+	- Execution environment and Browser should be configured in a file
+	- Logging of all steps
+	- Easy to understand automation report
+	- Should support common features of Web applications such as Alerts, IFrames etc.
+	- Test and Configuration data should be driven by Properties files
+	- Supports CI/CD process
+	
+Tools and Technologies
+	- Eclipse
+	- Java
+	- Selenium
+	- TestNG
+	- Maven
+	- Log4j2
+	- Extent report
+	
+---------------------------------------------------
+1st step - create a Maven Project in Eclipse
+
+	- File - new - Maven Project - simple maven project
+	- give it a group id: / artifact id: 
+	
+2nd step - create a package structure
+
+	- there are 2 major packages by default:
+		- src/main/java
+			- Framework code goes here ex.
+				- com.alert 		(code to handle alert operations)
+				- com.base   		(2 classes, base page "parent class for page classes" and base test "parent class for test classes")
+				- com.constants		(all the Constants and Final Variables)
+				- com.driver		(create driver object and launch the browser)
+				- com.iframe		(code to handle iframes in the application)
+				- com.javascript	(code to handle javascript actions)
+				- com.properties	(code to read data from config and test data files)
+				- com.report		(logic to implement the Extent Report)
+				- com.waits			(code to implement implicit and explicit waits)
+		- src/test/java
+			- Page and Test Classes go here
+			
+3rd step - Add Maven dependencies to pom.xml
+
+4th step - implement the driver package
+	- com.driver package
+	- 2 classes:
+	- BrowserFactory
+		- logic to create the Driver object
+		- public static WebDriver createBrowserInstance(String browserName)
+	- DriverFactory
+		- logic to Get and Set the Driver object
+		- public void setDriver(WebDriver driverObj)
+		- public WebDriver getDriver() 
+		
+5th step - Report Package
+	- 3 classes
+	- ExtentReportManager
+		- public static ExtentReports setUpExtentReport()
+	- ExtentFactory
+		- public void setExtent(ExtentTest obj )
+		- public ExtentTest getExtentTest()
+		- public void removeTest()
+	- ExtentReportListener implements ITestListener //override the methods
+		- public void onTestStart(ITestResult result)
+		- public void onTestSuccess(ITestResult result)
+		- public void onTestFailure(ITestResult result)
+		- public void onTestSkipped(ITestResult result)
+		- public void onStart(ITestContext context)
+		- public void onFinish(ITestContext context)
+
+6th step - Alert Package
+	- one class AlertActions
+		- public void switchToAlert() 
+		- public void acceptAlert() 
+		- public void cancelAlert() 
+	
+7th step - IFrame Package
+	- one class IframeActions
+		- public void waitForIframeAndSwitch(String idOrName)//this uses id or name
+		- public void waitForIframeAndSwitch(int index) 	 //this uses index
+		- public void switchBackToDefaultContent()           //go back to the main page
+	
+8th step - Javascript Package
+	- one class JavascriptActions
+		- public void click(WebElement element)
+		- public void sendKeys(WebElement element, String value)
+		- public void scrollPageToViewElement(WebElement element)
+		- public void scrollToEndOfPage(WebElement element) 
+		
+9th step - Properties Package
+	- 2 classes	
+		- ConfigLoader
+			- public static ConfigLoader getInstance() 
+			- public String getPropertyValue(String key)
+		- TestDataLoader
+			- private static void loadFile(String filePath)
+			- private String getPropertyValue(String key)
+			- public String getAppURL() 
+			- public String getUserName() 
+			- public String getPassword()
+			
+10- step - Wait Package
+	- 2 classes
+		- ExplicitWaitActions
+			- public void waitForElementToBePresent(WebElement element, String elementName)
+			- public void waitForElementToBeClickable(WebElement element, String elementName)
+		- ImplicitWaitActions
+			- public void setImplicitWait()
+		
+11th step - Base Package
+	- 2 classes
+	- BaseTest class
+		- parent class for all the test classes
+	- BasePage class
+		- parent class for all the page classes
+		
+	BaseTest class
+		- Every test class Extends the Base test class
+		- so all the methods of the base test class will be available for all the test classes as well
+		- common methods for all the test classes
+		- 2 Methods
+			- to create a driver object (open a browser)
+			- public void setup() 
+			- to close a driver object (close a browser)
+			- public void tearDown()
+	BasePage Class
+		- parent class for all the page classes
+		- common methods for all the page classes
+		- public void click(WebElement element, String elementName)
+		- public void sendKeys(WebElement element, String elementName, String value)
+		- public boolean isElementSelected(WebElement element, String elementName)
+		- public void selectCheckBox(WebElement element, String elementName)
+
+12th step - 		
+Framework part is completed. Now we use the above framework to create the test cases (video 255 https://www.udemy.com/course/zero-to-hero-in-selenium-webdriver-java-basics-to-advance/learn/lecture/40222652#search)
+we will use the Page Object Design Pattern
+
+we will create 2 new packages under src/test/java
+	- com.pages
+		- LoginPage class extends BasePage class
+			- login locators
+			- method to perform login steps 
+				- public void loginToApplication(String userNameValue, String passwordValue)
+	- com.test
+		- LoginTest class extends BaseTest class
+			- public void  loginWithValidUserNameAndValidPassword() loginToApplication(String userNameValue, String passwordValue)
+			
+13th step - execute the login test cases
+	- first specify the test data in the properties file
+	- we have two test data files.
+		- test
+		- prod
+	- create a testng.xml to run the tests
+	

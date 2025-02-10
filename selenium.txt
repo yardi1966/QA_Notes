@@ -1,0 +1,3333 @@
+Selenium - https://www.udemy.com/course/test-automation-using-selenium-beginner-to-pro/learn/lecture/37517966?start=0#overview
+
+What is Selenium
+	- Group of Open Source test automation tools
+	- Selenium Suite
+		- Selenium IDE
+		- Selenium RC
+		- Selenium WebDriver
+		- Selenium Grid
+		- Selenium 2 (Selenium RC + WebDriver)
+		- Selenium 3
+		
+	- Selenium IDE: Record and Playback tool
+	*- Selenium RC: Obsolete
+	- Selenium WebDriver: API's (Classes and Functions)
+	- Selenium Grid: Remote Execution
+	
+	Selenium IDE: Ex. need test login functionality for a website for 100 users
+					  input the user/pass for the first user
+					  Selenium IDE will record all the steps involved with the login functionality
+					  the Selenium IDE will perform the task automatically	
+					- Not used in industry because of limitations
+						- limited browsers (firefox and chrome only)
+						- can't write complex scripts
+						- no database testing support
+						- do data driven testing support
+	Selenium WebDriver: uses various programming languages
+						- automates web apps
+						- no UI, collection of API'safari
+						- direct browser communication
+						- multiple browser support
+						- multiple languages (Java, JavaScript, Python, C#, Ruby)
+						Limitations
+							- no mobile applications
+							- no desktop applications
+							- no in-built test reporting (USE TestNg)
+	Selenium Grid: used for remote execution of test cases
+					- write a test case in one machine and run it in another machine
+					- parallel execution (same test case on multiple browsers on different machine
+					- hubs and nodes (VM's)
+					- requires Selenium server (jar file)
+					ex.
+												  Node 1 - Windows + Chrome
+												/ 
+							Test Script - Hub   - Node 2 - Mac + Safari
+												\
+												  Node 3 - Linux + Firefox
+												  
+---------------------------------------------------
+Selenium Architecture
+	- Classes and Objects
+		- Object: anything that has a state (data) and behavior (functions)
+		- Class: blueprint of an Object
+	- Interface
+		- Constants and abstract methods
+		- specify what to do but not how to do it
+	- API (Classes and Interfaces)
+	- WebDriver automates real user actions on browsers, eg. click, input etc. (get(), getTitle(), close(), quit()
+
+---------------------------------------------------
+
+Selenium WebDriver Architecture
+	- Selenium language Bindings
+		- java, ruby, c#, python, javascript => JSON Wire Protocol => Drivers (firefox, chrome ,safari, opera, edge) <=> Real browsers (firefox, chrome ,safari, opera, edge)
+		- first you write your code
+		- then it uses JSON Wire Protocol to transfer your instructions (open browser, click. etc) to the browser driver
+		- then the browser driver translates the instructions over HTTP into instruction the browser can understand
+		- specify path of browser driver in your code
+---------------------------------------------------
+
+Locators
+	- different ways selenium identifies various elements in a webpage
+	- id
+	- Name
+	- Class Name
+	- Tag Name
+	- Link Text
+	- Patial Link Text
+	- CSS Selectors
+	- XPATH
+
+---------------------------------------------------
+
+ex. find the element "first_name" and enter "Andrew" in the text box	
+	
+FindElement and SendKeys methods
+	- ex. WebElement firstName = driver.findElement(By.name("first_name"));
+		  firstName.sendKeys("Andrew");
+		  
+Summary of WebElement Methods
+	- sendKeys(): Sends a text to the input field
+	- Click(): Clicks an element/button
+	- getText(): Fetches the text inside the element
+	
+LinkText & partialLinkText
+	- ex. WebElement image = driver.findElement(By.linkText("Images"));
+		  image.click(); 
+		  
+		  WebElement gmail = driver.findElement(By.partialLinkText("Gmai"));
+		  gmail.click();
+		  
+CheckBox method - boolean
+	- isSelected(): Returns true if a checkbox is checked. Else returns false
+	
+---------------------------------------------------
+	
+Select Class
+	- Select s = new Select(element)
+	- selectByValue(): selects the option whose "value" attribute matches the specified parameter
+	- selectByVisibleText(): selects the option that displays the text matching the specified parameter
+	- selectByIndex(): selects the option at the given index
+	
+	- ex. Select companySelect = new Select(company);
+		  companySelect.selectByValue("2");
+		  companySelect.selectByVisibleText("RCA");
+		  companySelect.selectByIndex(5);
+		  
+		WebElement btn = driver.findElement(By.name("btnK"));		//when there is only one button
+		List<WebElement> btn = driver.findElements(By.name("btnK"));//when there is more than one button of the same name
+		Thread.sleep(3000);											//slow down selenium															
+		btn.get(0).click();											//click the button in the first position
+
+---------------------------------------------------
+		
+Document Object Model (DOM) tree
+	-		 HTML
+			/    \
+		Head	  Body
+		/ \       / \
+	Meta Title   H1 H2
+	
+XPATH
+	- every element in a webpage has a unique position in the DOM
+	- used by the XPATH (XML path)
+	- it's a syntax or expression that navigates through the DOM tree and uniquely identifies the web element
+	- Xpath=//tagname[@attribute='value']
+	- BELOW EXAMPLES ARE FROM google.com
+	- Contains
+		- ex. find an input path that contains the name 'sub' 
+		- Xpath=//*[contains(@attribute,'sub')] //* can be anything like "input"
+	- OR
+		- Xpath=//*[@class='gLFyF' or @name='q']
+		  Xpath=//input[@class='gLFyF' or @name='q']
+	- And
+		- Xpath=//*[@class='gLFyF' and @name='q']
+	- Following
+		- Xpath=//*[@type='text']//following::input //returns all the input tags that follow the 'text' type element
+	- Ancestor
+		- Xpath=//*[text()='Enterprise Testing']//ancestor::div
+		
+---------------------------------------------------
+		 
+CSS Selectors
+	- Expressions that help us to locate elements by their styling attributes like:
+		- class
+		- id
+		- Attribute
+	- id
+		- Tag#id
+		- eg: input#jamaica:
+		  find the input field with id "jamaica"
+	- Class
+		- tag.class
+		- eg. input.jamaica
+		  find  the input field with class "jamaica"
+	- Attribute (any other attribute)
+		- Tag[attribute=value]
+		- eq. input[name='jamaica']
+		  find the input field with attribute name "jamaica"
+	- Descendant
+		- used when we need to select descendants of the parent element
+		- use space " " followed by the descendant element
+		- ex. #user Select
+	- Child
+		- used to select direct child elements for the given parent element
+		- use">" symbol followed by the child element
+		- ex. #user>Select
+
+---------------------------------------------------
+		
+Screenshots
+	- TakesScreenshot Class
+	- contains a method that takes screenshots
+	- getScreenshotAs()
+	- Steps:
+		- Convert WebDriver object to TakesScreenshot object
+		- Call getScreenshotAs()
+		- Copy file to the desired location
+	- code:
+		- TakesScreenshot src = (TakesScreenshot)driver;
+		- File src = Src.getScreenshotAs(OutputType.FILE);
+		- FileUtils.copyFile(src, new File("path to file"));
+		
+Library to copy file
+	- Apache.commons.io jar
+	- Https://commons.apache.org/proper/commons-io/download_io.cgi
+	
+---------------------------------------------------
+		
+ChromeOptions Class
+	- A class that is used to set additional Browser Settings related to ChromeOptions
+	- ex. ChromeOptions options = new ChromeOptions();
+		  options.addArguments("--incognito");
+		  options.addArguments("--start-maximized");
+
+---------------------------------------------------
+	  
+Read Data from Excel
+	- Apache POI Library (might need to be imported)
+	- Install Apache POI java dependencies
+	- Create an Object of File class and FileInputStream class
+	- Use Apache POI classes and their methods i.e Workbook, Sheet and Row classes
+		- methods to parse and fetch data from Excel sheet
+		- ex.
+			File file = new File("D:\\selenium-java\\input.xlsx");
+		    FileInputStream fis = new FileInputStream(file);
+			
+			XSSFWorkbook workbook = new XSSFWorkbook(fis);
+			Sheet sheet = workbook.getSheet("Sheet1");
+			
+			Row row = sheet.getRow(0);
+			String value = row.getCell(0).getStringCellValue();
+			
+---------------------------------------------------
+			
+Action Classes
+	- built-in feature
+	- handles keyboard and mouse events
+	ex. methodes of the Action object
+	- clickAndHold()
+	- doubleClick()
+	- dragAndDropBy(source, x-offset, y-offset) etc
+	Steps:
+		- import the Actions and Action classes
+		- Create a new Actions project
+		- Create an Action using the Actions object in step 2
+		- Build the set of actions
+		- Perform the actions
+		- ex. WebElement draggable = driver.findElement(By.xpath("//*[contains(@id,'mydivheader')]"));
+		
+		      Actions builder = new Actions(driver);
+		      Action action = builder.dragAndDropBy(draggable, 200, 100).build();
+		
+		      action.perform();
+			  
+---------------------------------------------------
+			  
+Selenium Waits
+	- different elements load at different times
+	- this makes it difficult to identify the elements
+	- Casuses ElementNotVisibleException
+	- Types of wait: 
+		- Implicit
+			- tells the WebDriver to wait for some time
+			- throws an exception after that time
+			- use it when we know the time to wait in advance
+			- driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3)); //wait 3 seconds
+			
+		- Explicit
+			- tells the WebDriver to wait for some conditions to occur within a specified time
+			- methods of the expected conditions class
+				- visibilityOfElementLocated()
+				- elementToBeClickable()
+				- elementToBeSelected()
+				- frameToBeAvailableAndSwitchToIt()
+				- presenceOfElementLocated()
+				- textToBePresentInElement()
+				- WebDriverWait wait = new WebDriverWait(WebDriverReference, Duration.ofSeconds());
+				- WebElement elem = wait.until(<ExpectedConditions.conditions>);
+				- elem.click();
+				- ex.
+					WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(3));
+		            WebElement date = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(@id,'datepicker')]")));
+					date.sendKeys("hello andrew");
+
+---------------------------------------------------
+				
+Test Automation Framework
+	- rules for writing Automation Test Cases
+		- Reusability
+		- Maintainability
+		
+	- Things to consider
+		- Test Data
+		- Reporting
+		- How to organize re-usable methods
+		- How to organize WebElement locators
+		
+	- Types of Frameworks
+		- Data Driven
+			- Test Data -> Data-driven Test Script -> System Under Test (SUT)
+			- Test data and test scripts are separate
+			- test data is stored in an excel/csv file
+			- test data contains input data and expected results
+			Use case for Data driven framework
+				- Execution of same test cases for different test data (ex. login for different users)
+				- checking for valid/invalid transactions
+				- checking for field validations
+		- Page Object Model (POM)
+			- 2 Components
+				- Page Class
+					- all pages in a web application have a page class
+					- Locators or Web Elements
+					- Re-usable functions
+					- define a Page Class of Every Webpage
+					- Test Case
+					- locators and test scripts are stored separately
+				- Test Scripts
+					- Java functions that will use the locators and functions of the page class
+			- Use case: Test web application with lots of pages
+				
+		- KeyWord Driven
+			- Common steps for all test cases are written as re-usable functions
+			- we define a keyword(text) for every common functionality
+			- we can call those functions using the keyword
+		- Hybrid
+			- Combination of multiple frameworks
+			- Typically used in testing complex applications
+			
+---------------------------------------------------
+		
+TestNg
+	- Test Automation Tool
+	- NG is Next Generation
+	- used along with Selenium
+	- Consolidate Test Reports
+	- Parallel execution of Test Cases
+	- Grouping test cases
+	- re-executing failed test cases
+	Annotations
+		- special commands to tell java compiler how to run the following code
+		- the @test annotation tells the java compiler to consider code following it as a seperate test case
+	Assert Class
+		- used to perform verification. ex. is the actual output the same as the expected output
+	Run Order
+		- TestNg test cases run in alphabetical order	
+		- you can change the priority, ex. @Test (priority = 1) will run this test case first
+	Groups
+		- used along with @Test annotation
+		- They organize test cases into groups
+		- can be spread across different classes
+		- can have different groups in the same class
+		- (groups = {"GROUP_NAME"})
+		Include tag
+			- used in xml file to INCLUDE a particular group in execution
+		ex.
+		<?xml version="1.0" encoding="UTF-8"?>
+		<suite parallel="false" name="Suite">
+		<test name="Test">
+		<groups>
+			<run>
+				<include name="google"></exclude>
+			</run>
+		</groups>
+		<classes>
+			<class name="NewTest"/>
+		</classes>
+		</test> <!-- Test -->
+		</suite> <!-- Suite -->
+		
+	Re-Execute Failed Test Cases
+		- Execute Test-output/Testng-failed.xml
+	Parallel Execution
+		- thread-count="3" (how many to run)
+		- parallel="methods" (what to run in parallel)
+	Exclude tag
+			- used in xml file to EXCLUDE a particular group in execution
+---------------------------------------------------
+
+		
+Selenium 4
+	- WebDriverManager
+		- scripts directly comunicate with the browser
+		- no browser drivers needed
+	- WebElement Screenshots
+		- takes screenshot of a page, a part of the page or just an element
+		- WebElement logo = driver.findElement(By.className("gb-inside-container"));
+		- File file = logo.getScreenshotAs(OutputType.FILE);
+	- Relative Locators
+		- locate an element that's related to another element
+		ex. WebElement elem = driver.findElement(By.className("lnXdpd"));
+		    WebElement txtarea = driver.findElement(with(By.tagName("textarea")).below(elem)); //find the textarea webelement that is below the element lnXdpd
+		    txtarea.sendKeys("Kingston Jamaica");
+	- Multiple Tabs and Windows
+		- scripts that automatically open new tabs or browser windows
+		- driver.switchTo().newWindow(WindowType.TAB); //OPENS A NEW tab
+		- driver.switchTo().newWindow(WindowType.WINDOW); //OPENS A NEW window
+
+*************************************SECOND TRAINING COURSE*******************************************
+https://www.udemy.com/course/zero-to-hero-in-selenium-webdriver-java-basics-to-advance/learn/lecture/40010300?start=0#search
+
+Selenium Structure
+
+	- Project (can contain multiple packages)
+		- Package (can contain multiple classes)
+			- Class
+		
+Main() Method
+	- entry point of java code
+	- where code is executed
+	- code outside of the main method is not executed
+	- Public static void
+	  main(String[] args) {
+				}
+	- must have a main method to run a java application
+	
+---------------------------------------------------
+
+Java Variables
+	- container used to store info
+	- store different types of values based on data type
+	- dataType variable = value;
+	ex.String employeeName = "John";
+	- 3 types
+		- Local
+		- Instance
+		- Static
+	- naming rules
+		- a-z, A-Z, 0-9, $, _
+		
+	Local Variables
+		- created in method / block
+		- accessible to the same method / block 
+		- stored in the STACK memory area
+		- must assign before you use
+		- cannot be Static
+		- No Access modifiers applicable
+			- Public
+			- Private
+			- Protected
+			- Default
+			
+	Instance Variables
+		- Created inside a class BUT OUTSIDE of a method / block
+		- accessible in ALL methods / blocks in the class
+		- "public" keyword allows it to be accessed anywhere in the project
+		- stored in the HEAP memory area
+		- Assigning a value is not mandatory. default will be NULL for String, int will be zero
+		- without "Static" keyword
+		- Access modifiers applicable
+			ex. public String employeeName = "Andrew";
+				private String employeeName = "Andrew";
+				protected String employeeName = "Andrew";
+				
+	Static Variables
+		- Created OUTSIDE of a method / block
+		- with "static" keyword
+		- stored in the METHOD memory area
+		- Assigning a value is NOT mandatory. default will be NULL for String, int will be zero
+		- accessible in ALL methods / blocks in the class and other classes
+		- Access modifiers applicable
+			ex.
+			    public static String employeeName = "Andrew";
+				private static String employeeName = "Andrew";
+				protected static String employeeName = "Andrew";
+		- "Static" allows it to be accessed without creating the object of the class		
+---------------------------------------------------
+				
+Data Types
+	- type of data stored in a variable
+	- mandatory to define for variable
+	- one data type per variable
+	- applicable for variable only NOT for method or class
+	- 2 types
+		- Primitive (byte, short, int, long, float, double, boolean, char)
+			- byte age = 20;
+			  int zipcode = 32565;
+	          float salary = 123.45f; (have to use "f" to indicate it's a float because all decimals are consideded double)
+			  float accurate to 5 decimal points only, after that it truncates
+			  ex. 
+			  float salary = 123.456789f;
+			  double dist = 34.456789123;
+		
+		      System.out.println(salary);
+		      System.out.println(dist);
+			  result: 123.45679
+                      34.456789123
+			- 
+		- non-primitive (String, Array, Object)
+		
+---------------------------------------------------
+			
+Operators
+	- specific symbol to perform a specific task
+	- applicable for primitive and non-primitive data types
+	Types
+		- Arithmetic (+, -, *, /, %)
+		- Assignment (=, +=, -=, *=, /=)
+		- Relational (<, <=, >, >=, ==, !=)
+		- Logical (&&, ||)
+	Arithmetic
+		- int num1 = 25;
+		  int num2 = 10;
+		
+			System.out.println(num1+num2);
+			System.out.println(num1-num2);
+			System.out.println(num1*num2);
+			System.out.println(num1/num2);
+			System.out.println(num1%num2);
+			
+		result:
+			35
+			15
+			250
+			2
+			5
+			
+Assignment Operators
+	- ex. 
+	    int num = 10;
+		
+		num += 5;//add 5 to num = 15
+		System.out.println(num);
+		num -= 5;//subtract 5 from num = 10
+		System.out.println(num);
+		num *= 5;//multiply 5 by num = 50
+		System.out.println(num);
+		num /= 5;//divide num by 5 = 10
+		System.out.println(num);
+
+	
+Relational Operators
+	- ex.
+		int num1 = 10;
+	 	int num2 = 20;
+		int num3 = 20;
+		
+		System.out.println(num1 < num2);//10 < 20 = true
+		System.out.println(num2 < num1);//20 < 10 = false
+		System.out.println(num2 <= num3);//20 <= 20 = true
+		System.out.println(num1 > num2);//10 > 20 = false
+		System.out.println(num2 > num1);//20 > 10 = true
+		System.out.println(num2 >= num3);//20 >= 20 = true
+		System.out.println(num1 == num2);//10 == 20 = false
+		System.out.println(num2 == num1);//20 == 10 = false
+		System.out.println(num2 == num3);//20 == 20 = true
+		System.out.println(num1 != num2);//10 != 20 = true
+		System.out.println(num2 != num1);//20 != 10 = true
+		System.out.println(num2 != num3);//20 != 20 = false
+			
+Logical Operators
+	- && if both conditions are true, then true. if one condition is false, then false
+	- || if only one condition is true, then true. if both conditions are false, then false
+	ex.
+		int num1 = 30;
+		int num2 = 20;
+		int num3 = 10;
+		
+		System.out.println(num1 > num2 && num1 > num3);//30 > 20 and 30 > 10 = true
+		System.out.println(num1 > num2 && num3 > num1);//30 > 20 and 10 > 30 = false
+		System.out.println(num1 > num2 || num1 > num3);//30 > 20 and 30 > 10 = true
+		System.out.println(num1 > num2 || num3 > num1);//30 > 20 and 10 > 30 = true
+	
+---------------------------------------------------
+	
+Control Statements
+	- decides the flow of the execution or which line of code should next be executed
+	- condition is evaluated to decide flow
+	ex.
+				it's Raining (condition)
+				 |       |
+				no      yes
+				/         \
+			Take Bike	Take Car
+			
+	types
+		- Selection statements (If else, Switch case)
+		- Iterative Statement (For loop, While loop)
+		
+If Else
+	- int age = 20 ; 
+		
+		if (age > 18 ) {
+			
+			System.out.println("yes , You can vote !");
+			
+		}
+		
+		else {
+			
+			System.out.println("No , you can not vote");
+		}
+		
+	
+If-else-if
+	- int marks = 85 ;
+		
+		if (marks < 35) {
+			System.out.println("C Grade");
+		}
+		else if (marks >=35 && marks <=60) {
+			System.out.println("B Grade");
+		}
+		
+		else if (marks > 60) {
+			System.out.println("A grade");
+		}
+		
+Switch Case
+	- int monthNumber = 3; 
+		
+		switch(monthNumber) {
+		
+		case 1 : 
+			System.out.println("Jan");
+			break;
+		
+		case 2 : 
+			System.out.println("Feb");
+			break;
+		
+		case 3 :
+			System.out.println("March");
+			break;
+		
+		case 4 :
+			System.out.println("Apr");
+			break;
+		
+			
+		default :
+			System.out.println("Number is invalid");
+			
+		}
+	}
+	
+For Loop
+	- for (int i =1 ; i <=10 ; i++) {
+			
+			System.out.println("Hello World");
+		}
+		
+While Loop
+	- int number = 1 ; 
+		
+		while (number <= 5) {
+			System.out.println("Hello Java");
+			
+			number ++ ;
+		}
+
+---------------------------------------------------
+		
+Arrays
+	- String studentsName [] = new String[5]; 
+		
+		studentsName[0] = "John" ; // element
+		studentsName[1] = "Smith" ;
+		studentsName[2] = "Mike" ;
+		studentsName[3] = "Michal" ;
+		studentsName[4] = "Larry" ;
+		
+		 // System.out.println(studentsName[6]);
+		
+		for (int i = 0 ; i < studentsName.length ; i++ ) {
+			System.out.println(studentsName[i]);
+		}
+
+	}
+Two Dimension Arrays
+	- 
+		// creation of Array 2 rows 2 columns
+				int [][] studentMarks = new int [2][2];
+				
+				// assign values
+				
+				studentMarks[0][0] = 5 ;
+				studentMarks[0][1] = 6 ;
+				
+				studentMarks[1][0] = 15 ;
+				studentMarks[1][1] = 16 ;
+				
+				//System.out.println(studentMarks[1][0]);
+				
+				for (int r = 0 ; r < studentMarks.length ; r++ ) {		//traverse the row
+					for (int c = 0 ; c < studentMarks.length ; c++ ) {	//traverse the column
+						System.out.println(studentMarks[r][c]);
+						
+					}
+				}
+
+---------------------------------------------------
+
+Java Class and it's Objects
+	- Class is a container to store data members
+	- Variables, Methods, Constructors
+	
+					keyword class  class name
+							\			/
+					public class Employee{
+											
+					String name = "Mike";  //variables
+					String dept = "Testing";
+													method
+												   /
+						public void printEmployee(){
+					
+						System.out.println(name);
+						System.out.println(dept);
+						}
+					
+					}
+					
+***********************************EXAMPLE************************************
+2 DIFFERENT Classes PART OF PACKAGE OOPS
+
+package OOPS; //package name
+
+public class Employee {             //class Employee can't run by itself because it's not part of MAIN()
+	
+	String employeeName = "Mike";
+	String employeeDept = "QA";
+	
+		
+	public void printEmployee() {
+		{
+			System.out.println(employeeName);
+			System.out.println(employeeDept);
+			
+			
+		}
+	}
+
+	
+
+}
+
+package OOPS; //package name
+
+public class Runner {          //class Runner with MAIN()
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+			//Create Object of Employee Class
+			
+		// ClassName RefVarName = new Constructor
+		
+		Employee emp1 = new Employee();
+		
+		emp1.printEmployee();//prints both employee name and dept
+		
+		System.out.println(emp1.employeeDept); //prints the dept name
+		
+		Employee emp2 = new Employee();
+		
+		emp2.printEmployee();
+	}
+
+}
+
+***********************************END EXAMPLE************************************
+
+Java Constructor
+	- special method automatically called when the object is created
+	- initialize instance variable of a class
+	- Creation rules (name = ClassName Return Type = void)
+	- Optional to write in Java class, not mandatory
+	- Access Modifiers applicable (public, private, protected. default)
+	- on class can have many constructorss
+	
+	Types
+		Default
+			- public Employee(){ }
+			- provided by compiler at runtime if non is present
+			- initializes variables with default values
+			- does not have any parameters
+			- ex.
+				Employee emp1 = new Employee();
+				emp1.printEmployee();//prints both employee name and dept
+				System.out.println(emp1.employeeDept); //prints the dept name
+		
+				Employee emp2 = new Employee();
+				emp2.printEmployee();
+			
+		Parameterized constructors
+			- public Employee(String n, String d){
+					name = n;
+					dept = d;
+					}
+			- NOT provided by the compiler, user has to create it
+			- Initializes variables with user provided values
+			- contains parameers
+			- many constructors
+			- ex.
+			String employeeName;
+	String employeeDept;
+	int salary;
+	
+	public void printEmployee() {
+		{
+			System.out.println(employeeName);
+			System.out.println(employeeDept);
+			System.out.println(salary);
+			
+		}
+	}
+		//parameterized constructor same name as the Class
+	public Employee (String n, String d, int s) {
+		
+		employeeName = n;
+		employeeDept = d;
+		salary = s;
+		
+	}
+	
+	public Employee (String n, String d) {
+		
+		employeeName = n;
+		employeeDept = d;
+		
+	}
+	
+	//RUNNER Class
+	//****************PARAMETERIZED CONSTRUCTOR******************
+		Employee emp1 = new Employee("Andrew", "QA", 99000);
+		emp1.printEmployee();
+		
+		Employee emp2 = new Employee("Bob", "HR", 78000);
+		emp2.printEmployee();
+		
+		Employee emp3 = new Employee("Frank", "IT");
+		emp3.printEmployee();
+		
+		
+Constructor Chaining
+	- one constructor can call another constructor
+	- "this" keyword used to call constructor
+	- ex.
+		public Employee(String n, String d){
+		this();                                  //chaining constructor calling line MUST be the first line
+		name = n;
+		dept = d;
+		}
+	- constructor calling line MUST BE THE FIRST LINE
+	- one constructor can call ONLY ONE constructor, NOT Multiple
+	
+---------------------------------------------------
+	
+Inheritance
+	- code resusability
+	- IS-A relationship 
+	- parent-child relationship
+	- "Extends" keyword is used
+	- Object class is the parent class for all Java classes if no explicit parent exists
+	- Data member in the parent class is available to the child class
+	ex.
+			Parent class
+					\
+		public class Person{
+		String name;
+		}
+		
+		     Child class make relation   parent class
+					\				/     |
+		public class Employee extends Person{
+		String dept;
+		}
+				|
+			name, dept variables
+			
+	- Rules
+		- one class can extend only one class
+		- a parent class can have multiple child classes
+		
+---------------------------------------------------
+
+Polymorphism
+	- method overloading
+	- method of overriding
+	- no concept of VARIABLE overloading and overriding
+	method overloading
+		- inside the same class you have different methods with the same name but different amount of parameters
+			ex.
+				public void add(int a, int b){
+				System.out.println(a+b);
+				}
+				
+				public void add(int a, int b, int c){
+				System.out.println(a+b+c);
+				}
+		- compiler decides which method to call based on parameter values
+		
+	method overriding
+		- achieved with inheritance
+		- write the same method with different implementation in the child class
+		- Static method cannot be override
+		- known as runtime polymorphism
+		
+---------------------------------------------------
+		
+Abstraction
+	- hides internal details of functionality
+	- Achieved by:
+		- Interface
+		- Abstract Class
+		
+	- Interface	
+		- Blueprint of a class
+		- defines services / functionality without implementation (UNLESS IT'S STATIC)
+		- represents IS-A relationship (parent-child)
+		- class implements interface (interface is the parent, class is the child)
+		- class has to provide implementation of ALL abstract methods in an interface
+		- class can implement MULTIPLE Interfaces
+		ex.
+			interface printable{
+				void print();
+			}
+			
+			class Book implements printable{
+				public void print(){System.out.println("print book");}
+			}
+			public static void main(String[] args){
+				Book obj = new Book();
+				obj.print();
+			}
+		- all methods in the interface are "public abstract"
+		- all variables by default are "public static final"
+		- Cannot create an Object of an Interface!
+		- Therefore you can't have a constructor
+		- Can Contain a "static method with Implementation"
+		- used to achieve 100% abstraction
+		
+	Abstract Class
+		- Created with the "Abstract" keyword
+		- can contain both abstract and non-abstract methods
+		- contains variables
+		- child class extends Abstract class
+		- Object CAN'T be created
+		- Can Contain Constructor
+		ex
+			abstract class Vehicle{
+				abstract void run();
+				}
+				
+			class Bike extends Vehicle{
+				void run(){
+				System.out.println("running safely");
+					}
+				}
+			public static void main(String [] args){
+				Bike superBike = new Bike();
+				superbike.run();
+			}
+			
+Abstract Class VS Interfact
+
+Abstract Class											Interface
+---------------------------------------------------------------------
+Contains BOTH abstract and non-abstract methods         Contains ONLY abstract methods
+Can have constructor									CAN'T have constructor
+One class extends ONLY ONE abstract class				One class can implement MULTIPLE Interfaces
+It is PArtial Abstraction(contains both method types)	It is 100% Abstraction
+By default every variable is NOT public static final	Every variable is by default public static final
+
+---------------------------------------------------
+
+Encapsulation
+	- data member and method in the same class
+	- make all variables private (cannot be accessed OUTSIDE the class)
+	- write a PUBLIC getter method to get the variable value
+	- write a PUBLIC setter method to set the variable value
+	ex.
+		public class Employee{
+		
+		private String dept;
+		
+		public void setDept(String d){
+		dept = d;
+		}
+		public String getDept(){
+		return dept;
+		}
+
+		}
+		
+---------------------------------------------------
+		
+Access Modifiers
+	- defines scope (visibility) of the field (class, method, variables, constructor)
+	- 4 types:
+		- public
+		- private
+		- protected
+		- default
+	- Rules
+		Private
+			- Accessible within the same class
+			- Minimum accessibility
+		Default
+			- Accessible within the same class
+			- Accessible from other classes within the SAME Package
+		Protected
+			- Accessible within the same package
+			- Accessible OUTSIDE the pacakge VIA Inheritance
+		Public
+			- Accessible anywhere in the project
+			- most accessible modifier
+
+---------------------------------------------------
+			
+Collection
+	- Framework
+		- stores multiple elements in a single variable
+		- contains methods to add, remove, get elements from the collection
+		- Dynamic size
+		- stored in heap memory
+		- applicable only for Objects not Primitives
+		- use For loop to iterate over the list of elements
+		
+	Hierarchy
+		- 								Collection(I)
+											|
+			-------------------------------------------------------------------------
+			|																		|
+			List(I)							Map(I)									Set(I)
+			/     \                          |                                      /     \
+		Array   LinkedList               HashMap                              HashSet   LinkedHashSet
+		List(C)
+		
+List Collection
+	- Allows duplicate elements
+	- Insertion order is maintained
+	- Element stored based on index
+	- Add, Remove elements
+	ex.
+		ArrayList <String> list = new ArrayList<String>();
+		
+		list.add("one");
+		list.add("two");
+		
+		List.remove(0);//removes the first element
+
+	
+***************************************SELENIUM WEB DRIVER******************************************
+
+Architecture
+	-                                 SearchContext (I)                           	I - Interface
+											|										C - Class
+										WebDriver (I)
+											|
+										RemoteWebDriver (C)
+									/		|		|		\
+								   /        |       |		 \
+						ChromeDriver(C)	 FireFox	Safari		IEDriver(C)
+										 Driver(C)  Driver(C)
+										 
+										 
+Chrome
+	- Launch Chrome Browser
+	ex.	
+			package com.learning;
+
+			import org.openqa.selenium.chrome.ChromeDriver;
+
+
+			public class ChromeDriverDemo {
+
+			public static void main(String[] args) {
+		
+		
+		
+		
+			//create object of ChromeDriver class
+			ChromeDriver driver = new ChromeDriver();
+		
+			//launch chrome brower and go to google.com
+			driver.get("https://www.google.com");
+		
+				}
+
+			}
+
+Firefox
+	- Launch Firefox Browser
+	ex.
+			package com.learning;
+
+			import org.openqa.selenium.firefox.FirefoxDriver;
+
+
+			public class FirefoxBrowserDemo {
+
+			public static void main(String[] args) {
+		
+			//create object of FirefoxDriver class
+			FirefoxDriver driver = new FirefoxDriver();
+		
+			//launch firefox brower and go to google.com
+			driver.get("https://www.google.com");
+		
+
+
+				}
+
+			}
+
+---------------------------------------------------
+
+Selenium WebDriver Locators
+	- Command which identifies GUI fields (Textbox, button, Checkbox, radio button, image, link, dropdown)
+	- Selenium checks locator at runtime
+	- script fails if locator not found
+	- Action is performed on element after locator is found
+		ex. - driver.findElement(By.id("someid")).click()
+	- 8 locators
+		- id
+		- name
+		- linkText
+		- PartialLinkText
+		- TagName
+		- ClassName
+		- XPATH
+		- CssSelector
+		
+Finding elements by name and id
+	- what is "id" and "name" locator?
+	- attribute value of html element
+	- not mandatory to have id or name attribute
+	ex.
+	
+	package com.learning;
+
+	import org.openqa.selenium.By;
+	import org.openqa.selenium.chrome.ChromeDriver;
+
+	public class IdAndNameLocatorDemo {
+
+		public static void main(String[] args) {
+		
+		//open chrome browser
+		ChromeDriver driver = new ChromeDriver();
+		driver.get("https://www.facebook.com");
+		
+		//enter Email id or Phone Number
+		//1st identify the locator for the element and enter a value
+		driver.findElement(By.id("email")).sendKeys("test@test.com");
+		
+		//enter password
+		//2nd identify the locator for the element and enter a value
+		driver.findElement(By.name("pass")).sendKeys("test123");
+		
+		
+			}
+
+	}
+
+
+Finding elements by LinkText and PartialLinkText
+	- Applicable on for links
+	- LinkText
+		- works with the EXACT link name displayed on the UI
+		- throws exception when link name not present on UI
+		- Use when the name is FIXED and will not change at run time
+	- PartialLinkText
+		- works with a PARTIAL link name displayed on the UI
+		- works with the EXACT link name displayed on the UI
+		- Use when the name is NOT FIXED and could change at run time
+		- throws exception when link name not present on UI
+	ex.
+	
+	package com.learning;
+
+	import org.openqa.selenium.By;
+	import org.openqa.selenium.chrome.ChromeDriver;
+
+	public class LinkDemo {
+
+		public static void main(String[] args) {
+		
+		//open chrome browser
+		ChromeDriver driver = new ChromeDriver();
+		//open facebook url
+		driver.get("https://www.facebook.com");
+		
+		//identify the element and click on the Forgot Password? link
+		//driver.findElement(By.linkText("Forgot password?")).click();
+		
+		//can also use the PartialLinkText locator
+		driver.findElement(By.partialLinkText("password?")).click();
+
+		}
+
+	}
+	
+Understanding Xpath and it's types
+	- XML path
+	- location of element in HTML document
+	- Useful when you can't identify the element by id and name locators
+	- allows you to find the element by using the HTML tags
+	- 2 types:
+		- Absolute path (NOT RECOMMENDED)
+			- complete xpath starts with the <html> tag
+			- starts with /
+			- driver.findElement(By.xpath("html/body/div[1]/div[1]/div[1]/div/div/div/div[2]/div/div[1]/form/div[1]/div/input")).sendKeys("test@test.com");
+		- Relative path (RECOMMENDED)
+			- starts with //
+			- allows search from anywhere in the html page
+	ex.
+
+		package com.learning;
+
+		import org.openqa.selenium.By;
+		import org.openqa.selenium.chrome.ChromeDriver;
+
+		public class XpathDemo {
+
+			public static void main(String[] args) {
+		
+		
+		// open chrome browser
+		ChromeDriver driver = new ChromeDriver();
+		// open facebook url
+		driver.get("https://www.facebook.com");
+		
+		//enter email id using ABSOLUTE Xpath (NOT RECOMMENDED!!!! USE RELATIVE XPATH)
+		//driver.findElement(By.xpath("html/body/div[1]/div[1]/div[1]/div/div/div/div[2]/div/div[1]/form/div[1]/div/input")).sendKeys("test@test.com");
+		
+		//Use Relative Xpath
+		driver.findElement(By.xpath("//input[@aria-label='Email or phone number']")).sendKeys("test@test.com");
+		
+		
+		}	
+
+	}
+	
+Xpath Methods	
+	- identify dynamic elements
+	- Contains() - attributes contains a partial value
+	- Starts-with() - attribue starts with the specified text value
+	- Text() - attribute with the exact value displayed
+	- Child - locate the child element of any parent element
+	- Parent - locate the parent element of any child element
+	- Following-sibling
+	- Preceding-sibling
+	- And
+	- OR
+	ex.
+		driver.findElement(By.xpath("//input[contains(@aria-label, 'First')]")).sendKeys("Andrew"); //contains example
+		driver.findElement(By.xpath("//input[starts-with(@aria-label, 'First')]")).sendKeys("Andrew");//starts-with example
+		driver.findElement(By.xpath("//span[text()='Next']")).click();//text example
+		driver.findElement(By.xpath("//div[@class='VfPpkd-dgl2Hf-ppHlrf-sM5MNb']/child::button")).click();//child example
+		driver.findElement(By.xpath("//input[@aria-label='Last name (optional)']/parent::div")).click();//child example
+		driver.findElement(By.xpath("//input[@aria-label='Last name (optional)']/following-sibling::div")).click();//following-sibling example
+		driver.findElement(By.xpath("//input[@aria-label='Last name (optional)']/preciding-sibling::input")).click();//preceding-sibling example
+		driver.findElement(By.xpath("//input[@type='text' and @name='lastName']")).click();//And example
+		driver.findElement(By.xpath("//input[@type='text' or @name='lastName']")).click();//Or example
+		
+***********************************************************************		
+https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
+***********************************************************************
+
+CssSelector Locators
+	- locates web elements
+	- useful when the id and name locators are not helpful
+	- works on various patterns
+		- TagName and id
+			- "#" prefix before the id values
+		- TagName and class
+			- dot "." prefix before class values
+		- TagName and any other attribute
+		- TagName and id and class
+		
+		attribute 				symbol used												example
+		----------				------------											----------
+		id						#														input#txtUsername
+		class name				.														input.button
+		attribute				tagname[attribute='value']								input[type='password']
+		multiple attributes		tagname[attribute1='value1'] [attribute1='value1']		input#btnLogin.button[name='Submit']
+		contains				*														input[type*='wo']
+		starts with				^														input[type^='pa']
+		ends with				$														input[type$='rd']
+		
+---------------------------------------------------		
+ClassName Locator
+	- locates element by using the class attribute value of the element
+	- Best used to find multiple elements having the same class name attribute value
+	- Element must have the class attribute
+	ex.
+	
+		// create object of FirefoxDriver class
+		FirefoxDriver driver = new FirefoxDriver();
+
+		// launch firefox brower and go to facebook.com
+		driver.get("https://www.facebook.com");
+				
+		//capture all text boxes of login page
+		List <WebElement> allTextBoxes =  driver.findElements(By.className("inputtext"));
+		
+		System.out.println("Total number of text boxes are: " +allTextBoxes.size());
+		
+		allTextBoxes.get(0).sendKeys("a@b.com");//enter the email in the First text box
+		allTextBoxes.get(1).sendKeys("abc123");//enter the password in the second text box
+---------------------------------------------------		
+TagName locator
+	- locates element by using the Tag name value of the element
+	- Best used to find multiple elements having the same Tag name value
+	- Tag name is Mandatory in every element
+	ex.
+	
+		// create object of FirefoxDriver class
+		FirefoxDriver driver = new FirefoxDriver();
+
+		// launch firefox brower and go to facebook.com
+		driver.get("https://www.facebook.com");
+		
+		//capture all links from the login page
+		List <WebElement> allLinks = driver.findElements(By.tagName("a"));
+		//print the total number of links found above
+		System.out.println("Total number of links are: "+allLinks.size());
+		
+		//traverse all the links returned above and print out each link
+		for (int i = 0; i < allLinks.size(); i++) {
+			System.out.println(allLinks.get(i).getText());//"'getText gets the text in the link ex. Sign Up
+		}
+
+---------------------------------------------------
+	
+findElement() vs findElements()	methods
+
+		findElement()					findElements()	
+		-------------					--------------
+		locates single element			locates multiple elements
+		Returns single WebElement		Returns List<WebElement>
+		Throws NoSuchelementException	Does not throw exception and returns empty List<WebElement>
+		when locator is not matched		when locator is not matched
+	
+		//identify search text box
+		WebElement searchTextBox = driver.findElement(By.name("q"));
+		//enter selenium into the text box
+		searchTextBox.sendKeys("Selenium");
+		
+		//identify all the links of the web page
+		List <WebElement> allLinks = driver.findElements(By.tagName("a"));
+		System.out.println("Number of links on the page: " +allLinks.size());
+		
+---------------------------------------------------
+
+Text Box
+	- input box to enter some value
+	- operations on a textbox
+		- displayed status
+		- enabled
+		- enter value
+		- fetch entered value
+		- delete entered value
+		
+		ex.
+		// launch firefox brower and go to selenium test page the-internet.herokuapp.com
+		driver.get("https://the-internet.herokuapp.com/forgot_password");
+		driver.manage().window().maximize();// launch in full screen mode
+		
+		//identify text box
+		WebElement emailTextBox = driver.findElement(By.name("email"));
+		
+		//Is text box displayed or not
+		boolean isDisplayedStatus = emailTextBox.isDisplayed();
+		System.out.println("Text Box displayed status: "+isDisplayedStatus);
+		
+		//Is text box enabled or not
+		boolean isEnabledStatus = emailTextBox.isDisplayed();
+		System.out.println("Text Box enabled status: "+isEnabledStatus);
+		
+		//enter value into text box
+		emailTextBox.sendKeys("selenium@test.com");
+		
+		Thread.sleep(5000); //wait to see the email entered
+
+		//get the entered value from the text box
+		@SuppressWarnings("deprecation")
+		String enteredValue = emailTextBox.getAttribute("value");
+		System.out.println("email entered: "+enteredValue);
+		
+		//delete the value from the text box
+		emailTextBox.clear();
+	
+---------------------------------------------------
+	
+Check Box
+	- multiple choice selections
+	- operations
+		- displayed
+		- enabled
+		- select
+		- selected status
+		- un-check box
+		
+		ex.
+		// launch firefox brower and go to selenium test page the-internet.herokuapp.com
+		driver.get("https://the-internet.herokuapp.com/checkboxes");
+		driver.manage().window().maximize();// launch in full screen mode
+		
+		//identify checkbox
+		WebElement cbox1 = driver.findElement(By.xpath("//form[@id='checkboxes']/input[1]"));
+		
+		//check if displayed or not
+		boolean isDisplayedStatus = cbox1.isDisplayed();
+		System.out.println("Checkbox displayed status is: "+isDisplayedStatus);
+		
+		//check enabled status
+		boolean isEnabledStatus = cbox1.isEnabled();
+		System.out.println("Checkbox enabled status is: "+isEnabledStatus);
+		
+		
+		//select checkbox
+		cbox1.click();
+			
+		//check selected status
+		boolean isSelectedStatus = cbox1.isSelected();
+		System.out.println("Checkbox selected status is: "+isSelectedStatus);
+		
+		Thread.sleep(5000);
+		
+		//de-select checkbox
+		cbox1.click();
+		
+		System.out.println("Goodbye!");
+		Thread.sleep(2000);
+		driver.close();
+		
+---------------------------------------------------
+
+Radio Buttons
+************************************
+https://www.facebook.com/r.php
+************************************
+
+	- user chooses one of many options
+	- operations
+		- displayed
+		- enabled
+		- select
+		- selected status
+		- un-check box
+		ex.
+		
+		// launch firefox brower and go to the Facebook signup page
+		driver.get("https://www.facebook.com/r.php");
+		driver.manage().window().maximize();// launch in full screen mode
+		
+		//identify radio button
+		WebElement rbutton1 = driver.findElement(By.xpath("//input[@value=1]"));//first radio button
+		WebElement rbutton2 = driver.findElement(By.xpath("//input[@value=2]"));//second radio button
+		
+		//check if displayed
+		boolean isDisplayedStatus = rbutton1.isDisplayed();
+		System.out.println("Radio button is displayed: "+isDisplayedStatus);
+		
+		//check if enabled
+		boolean isEnabledStatus = rbutton1.isEnabled();
+		System.out.println("Radio button is enabled: "+isEnabledStatus);
+		
+		Thread.sleep(5000);
+		
+		//check selected status
+		boolean isSelectedStatus = rbutton1.isSelected();
+		System.out.println("Radio button is selected: "+isSelectedStatus);
+		
+		Thread.sleep(5000);
+		
+		//select a radio button
+		rbutton1.click();
+		boolean newSelectedStatus = rbutton1.isSelected();
+		System.out.println("Radio button is selected after click: "+newSelectedStatus);
+		
+		Thread.sleep(5000);
+		
+		//un-check the radio button by clicking another button
+		rbutton2.click();
+		System.out.println("Goodbye!");
+		driver.close();
+	
+---------------------------------------------------
+	
+Drop Down
+	- shows a list of options to select one
+	- select
+	- get selected value
+	ex.
+		//identify dropdown field	
+		WebElement birthMonth = driver.findElement(By.xpath("//select[@id='month']"));
+		
+		//to perform an operation on a dropdown element you must create an object of a "Select Class"
+		Select selectBirthMonth = new Select(birthMonth);
+		//select "by value"
+		//selectBirthMonth.selectByValue("Feb");
+		
+		//select "by index" (index starts at 0)
+		//selectBirthMonth.selectByIndex(1);//also selects February
+		
+		//select "by visible text" (exactly what is displayed in the dropdown)
+		selectBirthMonth.selectByVisibleText("Feb");
+		
+		//get selected option from dropdown and put in a webelement
+		WebElement selectedOption = selectBirthMonth.getFirstSelectedOption();
+		//get the text value of the option and put it in a variable
+		String selectedDropDownValue = selectedOption.getText();
+		//print the value out
+		System.out.println("your birth month is: "+(selectedDropDownValue));
+
+---------------------------------------------------
+
+Operations on Links
+	- navigates users to other pages (hyperlink)
+	- displayed status
+	- enabled status
+	- click
+	- fetch name of link
+	ex.
+	 //identify link
+		WebElement fpLink = driver.findElement(By.linkText("Forgot password?"));
+		
+		//display status of link
+		Boolean displayedStatus = fpLink.isDisplayed();
+		System.out.println("Links displayed: "+displayedStatus);
+		
+		//enabled status
+		Boolean enabledStatus = fpLink.isEnabled();
+		System.out.println("Links enabled: "+enabledStatus);
+		
+		//get link name
+		String linkName = fpLink.getText();
+		System.out.println("Link name is: "+linkName);
+		
+		Thread.sleep(5000);
+		
+		//click on link
+		fpLink.click();
+		
+---------------------------------------------------
+		
+Calendar operations
+https://www.skyscanner.com
+
+	- input field which allows user to select the date
+	- open calendar
+	- select date
+	- go to next/previous month
+	ex.
+		//launch departure calendar
+		WebElement deptDate = driver.findElement(By.xpath("//button[@class='SearchControlButton_SearchControlBtn__YzUyO SearchControlButton_DesktopBtn__NzM1Z' and @data-testid='depart-btn']/child::span[1]"));
+		deptDate.click();
+		
+		Thread.sleep(5000);
+		//select today's date and click it
+		WebElement selectedDeptDate = driver.findElement(By.xpath("//button[contains(@class, 'today')]"));
+		selectedDeptDate.click();
+		
+		//click return button
+		WebElement rtnDate = driver.findElement(By.xpath("//button[@class='SearchControlButton_SearchControlBtn__YzUyO SearchControlButton_DesktopBtn__NzM1Z' and @data-testid='depart-btn']/child::span[1]"));
+		rtnDate.click();
+		
+		Thread.sleep(5000);
+		//select a return date and click it
+		WebElement selectedRtnDate = driver.findElement(By.xpath("//button[@aria-label='Thursday, January 16, 2025. Select as return date']"));
+		selectedRtnDate.click();
+
+---------------------------------------------------
+		
+Button operations
+	- web element that allows you to submit data
+	- displayed status
+	- enabled status
+	- click
+	- fetch name of button
+	ex.
+		//identify button element
+		WebElement addButton = driver.findElement(By.xpath("//button[@onclick='addElement()']"));
+		//WebElement addButton = driver.findElement(By.xpath("//button[text()='Add Element']"));//can also use the text method of Xpath
+		
+		//display status
+		boolean isBtnDisplayed = addButton.isDisplayed();
+		System.out.println("Button displayed status: "+isBtnDisplayed);
+		
+		//enabled status
+		boolean isBtnEnabled = addButton.isEnabled();
+		System.out.println("Button enabled status: "+isBtnEnabled);
+		
+		//get name of button
+		String btnName = addButton.getText();
+		System.out.println("Button name is: "+btnName);
+		
+		Thread.sleep(5000);
+		
+		//click button
+		addButton.click();
+
+---------------------------------------------------
+		
+Various CSS Validations
+	- language to set the look and feel of any element
+	- Background color
+	- Text-alignment
+	- Font size
+	ex.	
+		//identify element
+		//WebElement fpButton = driver.findElement(By.xpath("//button[@id='form_submit']"));
+		WebElement fpButton = driver.findElement(By.id("form_submit"));
+		
+		//css validations
+		String borderStyle = fpButton.getCssValue("border-style");
+		System.out.println("Border style is: "+borderStyle);
+		
+		String textAlign = fpButton.getCssValue("text-align");
+		System.out.println("Button text aligned: "+textAlign);
+		
+		String bkgColor = fpButton.getCssValue("background-color");
+		System.out.println("Button background color is: "+bkgColor);
+
+---------------------------------------------------
+		
+Most used Selenium Methods
+	- 		Method				Description
+			-------				------------
+			get(String url)		opens specified url in browser
+			getTitle()			Returns title of the current page
+			getCurrenturl()		Returns url of the current page
+			Window().maximize()	maximize the browser to full screenshot
+			navigate().back()	takes you back based on browser history
+			navigate().forward()takes you forward based on browser history
+			navigate().refresh()refresh the url
+			close()				close the current tab on the browser
+			quit()				close the entire browser
+			
+			ex. 
+			//scroll down page
+			//to scroll to the bottom of the page you need to use the javascript executor
+			//convert your driver to javascript executor
+			JavascriptExecutor js = driver;
+			Thread.sleep(3000);
+			//scroll to the bottom of the page
+			js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+			Thread.sleep(3000);
+			//open second tab, selenium's focus will be on the FIRST TAB ONLY!
+			driver.findElement(By.linkText("Elemental Selenium")).click();	
+			Thread.sleep(3000);
+			//close tab (FIRST TAB)
+			driver.close();
+			Thread.sleep(3000);	
+			//quit browser
+			driver.quit();
+		
+			//click on any link
+			//WebElement navigate = driver.findElement(By.linkText("A/B Testing"));
+			//navigate.click();
+			driver.findElement(By.linkText("A/B Testing")).click();	
+			Thread.sleep(3000);
+			
+			//click on back browser button
+			driver.navigate().back();
+			Thread.sleep(3000);
+			
+			//click on forward browser button
+			driver.navigate().forward();
+			Thread.sleep(3000);
+			
+			//refresh the url
+			driver.navigate().refresh();
+
+---------------------------------------------------
+			
+Alerts in Selenium
+	- message box displayed for notifications
+	- ask user to allow or deny permissions
+	- Developed in JavaScript
+	- Does not have locators
+	
+Handling Alerts:
+	- Selenium has an Alert Interface
+	- Switch to Alert from the Normal window
+	- Contains Accetpt() method
+	- Contains Dismiss() method
+	ex.
+		// create object of FirefoxDriver class
+		FirefoxDriver driver = new FirefoxDriver();
+
+		// launch firefox brower and go to selenium test page the-internet.herokuapp.com
+		driver.get("https://the-internet.herokuapp.com/javascript_alerts");
+		driver.manage().window().maximize();// launch in full screen mode
+		
+		//click button to get JS Alert
+		WebElement btnConfirm = driver.findElement(By.xpath("//button[text()='Click for JS Confirm']"));
+		btnConfirm.click();
+		
+		//switch focus from normal window to alert box
+		Alert al = driver.switchTo().alert();
+		
+		//get text of alert
+		String alertName = al.getText();
+		System.out.println("Name of Alert messageBox is: "+alertName);
+		Thread.sleep(3000);
+		//click on ok
+		//al.accept();
+		//or you can cancel it
+		al.dismiss();
+
+---------------------------------------------------
+	
+Iframe in Selenium (https://jqueryui.com/dialog/)
+	- Webpage embedded in a HTML page
+	- <iframe> </iframe> tag specifies an Iframe
+	- iframe can contain various web elements
+	- iframe can conatin another iframe - Nested iframes
+	- One HTML page can contain many iframes
+
+Handling iframes
+	- Selenium cannot directly identify elements inside an iframe
+	- switch to iframe to allow Selenium to identify an element
+		- by using the id of iframe
+		- by using the name of iframe
+		- by using iframe index if the name or id is not available
+	- exit the iframe once task is done
+	ex.
+		// create object of FirefoxDriver class
+		FirefoxDriver driver = new FirefoxDriver();
+
+		// launch firefox brower and go to selenium test page jqueryui.com/
+		driver.get("https://jqueryui.com/dialog/");
+		driver.manage().window().maximize();// launch in full screen mode
+		
+		driver.switchTo().frame(0);//switch to the iframe first so we can identify the element (this page only has ONE iframe so the index is zero)
+		Thread.sleep(3000);//slow down the execution so we can observe it
+		//identify element in the iframe
+		//below won't work because it's embedded inside an iframe so we had to switch to the iframe using "driver.switchTo().frame(0);" above
+		WebElement btnClose = driver.findElement(By.xpath("//button[@title='Close']"));
+		btnClose.click();//click the close button
+		
+		//exit iframe 
+		driver.switchTo().defaultContent();
+		//click on a link in the main page
+		driver.findElement(By.linkText("Demos")).click();
+		
+Nested Iframes
+	- iframe inside another iframe
+	- frame has a parent-child relationship
+	- Selenium can't go directly to the child iframe
+	- first switch to parent iframe then swithch to the child iframe
+	- first exit the child iframe then from the parent to the main page
+	ex.
+		// create object of FirefoxDriver class
+		FirefoxDriver driver = new FirefoxDriver();
+
+		// launch firefox brower and go to selenium test page the-internet.herokuapp.com
+		driver.get("https://the-internet.herokuapp.com/nested_frames");
+		driver.manage().window().maximize();// launch in full screen mode
+		
+		//switch from main page to parent iframe
+		driver.switchTo().frame("frame-top");//parent frame
+		
+		//switch from parent frame to child frame
+		driver.switchTo().frame("frame-middle");
+		//driver.switchTo().
+		
+		//identify web element
+		WebElement eName = driver.findElement(By.id("content"));
+		
+		//print text of web element
+		String name = eName.getText();
+		System.out.println("name of element in the frame is "+name);
+		//can also use this method
+		//System.out.println("name of element in the frame is "+eName.getText());
+		
+		//exit the child from to parent frame
+		driver.switchTo().parentFrame();
+		
+		//exit from parent frame to main page
+		driver.switchTo().defaultContent();
+
+---------------------------------------------------
+		
+Multiple Browser Windows
+	- Link opens a new tab in browser
+	- every window has a unique id
+	- switch between windows (tabs) by using the window id
+	ex.
+		// create object of FirefoxDriver class
+		FirefoxDriver driver = new FirefoxDriver();
+
+		// launch firefox brower and go to selenium test page jqueryui.com
+		driver.get("https://verint.com");
+		driver.manage().window().maximize();// launch in full screen mode
+		
+		//get window id of first tab
+		String firstTabWindowId = driver.getWindowHandle();
+		System.out.println("first tab window id is: "+firstTabWindowId);
+		
+		//open another tab by clicking the "support link"
+		driver.findElement(By.linkText("Support")).click();
+		Thread.sleep(3000);
+		
+		//focus is still in first window
+		Set <String> allWindowIds = driver.getWindowHandles();//get window id's of all windows and put in a "Set"
+		//switch focus from 1st tab to 2nd tab
+		for (String s: allWindowIds) {  //traverse through all the window id's
+			//switch focus
+			if(!s.equals(firstTabWindowId)) {	//if it doesn't equal the first window id, switch to the second window
+				driver.switchTo().window(s);
+			}
+		}
+		Thread.sleep(3000);
+		//click on a link in the second tab
+		driver.findElement(By.linkText("Verint holidays")).click();
+		Thread.sleep(3000);
+		//go back to the first tab
+		driver.switchTo().window(firstTabWindowId);
+		Thread.sleep(3000);
+		//click on button
+		driver.findElement(By.xpath("//a[text()='Learn More About Verint Open Platform']")).click();
+
+---------------------------------------------------
+	
+JavaScript execution from Selenium
+	- click on any button
+		- js.executeScript("arguments[0].click()", btn);
+	- enter value in a text box
+		- js.executeScript("arguments[0].value='John Smith'", txtBox);
+	- get title of webpage
+		- js.executeScript("return document.title").toString();
+	- get url of webpage
+		- js.executeScript("return document.URL").toString();
+	- scroll down a page
+		- js.executeScript("arguments[0].scrollIntoView(true)", <Desired Link>);//scroll page to desired link
+		- js.executeScript("window.scrollTo(0, document.body.scrollHeight)");//scroll down page to the end
+	- Swipe page from right to left
+		- js.executeScript("arguments[0].scrollIntoView()", <image_name>);
+
+---------------------------------------------------
+		
+Keyboard and Mouse event handling (uses the ACTIONS Class)
+	- right click (contextClick event)
+		/locate the element
+		WebElement email = driver.findElement(By.id("email"));
+		//uses the Actions class
+		Actions emlAction = new Actions(driver);
+		//right click on the email textbox
+		emlAction.contextClick(email).build().perform();
+	
+	- double click (doubleClick event)
+		//element is located inside an iframe
+		driver.switchTo().frame("iframeResult");
+		//locate the element
+		WebElement btnDblclick = driver.findElement(By.xpath("//button[text()='Double-click me']"));
+		//perform double-click event
+		//uses the Actions class
+		Actions dblclk = new Actions(driver);
+		dblclk.doubleClick(btnDblclick).build().perform();
+	
+	- drag and drop
+		//locate the element as it's in an iframe
+		driver.switchTo().frame(0);
+		WebElement source = driver.findElement(By.id("draggable"));//source element
+		WebElement dest = driver.findElement(By.id("droppable"));//destination element
+		//uses actions class
+		Actions drag = new Actions(driver);
+		//drag and drop operation from source to destination
+		drag.dragAndDrop(source, dest).build().perform();
+		
+	- mouseover event
+		WebElement acctList = driver.findElement(By.id("nav-link-accountList"));
+		Actions action = new Actions(driver);
+		action.moveToElement(acctList).build().perform();//hover over the list
+		Thread.sleep(5000);
+		//find element to click on
+		WebElement order = driver.findElement(By.id("nav_prefetch_yourorders"));//identify the element "orders"
+		action.moveToElement(order).build().perform();//hover over orders
+		Thread.sleep(5000);
+		action.click(order).build().perform();//click on orders
+		Thread.sleep(5000);
+		WebElement email = driver.findElement(By.xpath("//input[@id='ap_email']"));//identify email textbox
+		action.sendKeys(email, "a@b.com").build().perform();//enter email address
+	- click, sendkeys and more
+		action.sendKeys(email, "a@b.com").build().perform();//enter email address
+	- Performed by the Actions Class
+	ex.
+
+---------------------------------------------------
+	 
+Synchronization
+	- implicit wait
+		- Selenium continues execution once element is found and does not wait out the remaining time
+		- exception thrown if element not present in the given time
+		- overides default wait with user provided time
+		- user defined time applicable till the last line of code
+		- driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		
+	- explicit wait
+		- overides default wait with user provided time
+		- uses WebDriverWait class
+		- WebDriverWait wait = new WebDriverWait(driver, 20);
+		- //specify condition to become true
+		- Selenium continues execution once element is found and does not wait out the remaining time
+		- exception thrown if element not present in the given time
+		- user defined time applicable only for ONE element
+		ex.
+		//add explicit wait in case the other page is slow to load
+		//create an object of WebDriverWait class
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));//constructor
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.name("firstname")));
+		//enter FirstName
+		WebElement fName = driver.findElement(By.name("firstname"));
+		fName.sendKeys("Andrew");
+		//enter LastName
+		WebElement lName = driver.findElement(By.name("lastname"));
+		lName.sendKeys("DaCosta");
+		
+	- fluent wait
+		- waits for condition to become true
+		- includes frequency of checking condition
+		- Wait wait = new FluentWait(driver).withTimeout(Duration.ofSeconds(10)).pollingEvery(Duration.ofSeconds(2)).ignoring(NoSuchelementException.class);
+		- exception thrown if element not present in the given time
+		- user defined time applicable only for ONE element
+		
+Difference between the 3 waits
+
+	Implicit Wait				Explicit Wait				Fluent Wait
+	----------------			------------------			---------------
+	Applys to ALL elements		Applys to ONE element		Applys to ONE element
+	No Expected Condition		Expected condition avail.   No Expected Condition
+	No Polling time				No Polling time				Polling Time applicable
+	Basic wait					Advanced wait				Advanced wait
+	used when only waiting-		used when time and expect-	used when polling time and ignore exceptions required
+	time is sufficient			ed condition required
+	
+---------------------------------------------------
+	
+Customize Chrome Browser with Selenium
+	- ChromeOptions class
+	- Change download path
+	- launch in "Maximized mode"
+		ex.
+		Map<String, Object> preferences = new Hashtable<String, Object>();//Map is a collection. create object of Hashtable <key, value>. reference variable "preferences"
+		
+		//put "key" and "value". Change download location to "D:"
+		preferences.put("download.default_directory", "D:\\");
+		//create object of chrome options class
+		ChromeOptions options = new ChromeOptions();
+		
+		//start Chrome in Maximized mode using Chrome Options
+		options.addArguments("--start-maximized");
+				
+		//call method "setExperimentalOption"
+		options.setExperimentalOption("prefs", preferences);
+		
+		//create object of ChromeDriver class and add options object to the constructor.
+		//Selenium creates a session of the ChromeDriver
+		ChromeDriver driver = new ChromeDriver(options);	
+		
+		//launch chrome brower and go to google.com
+		driver.get("https://www.google.com");
+		
+	- Disable Java Script
+	- Disable notifications
+		ex.
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--disable-javascript");
+		options.addArguments("--disable-notifications");
+
+		// create object of ChromeDriver class and add options object to the
+		// constructor.
+		// Selenium creates a session of the ChromeDriver
+		ChromeDriver driver = new ChromeDriver(options);
+		driver.get("https://www.justdial.com");
+
+	- Launch Chrome Browser in Incognito mode
+		- options.addArguments("--incognito");
+		
+Customize Firefox Browser with Selenium
+	- FirefoxOptions class
+	- used with FirefoxProfile class
+	- creates a FirefoxDriver session
+	ex. 
+		- Change download path
+		//Create object of FirefoxProfile class
+		FirefoxProfile profile = new FirefoxProfile();
+		//set the object preference to use the customized download location
+		profile.setPreference("browser.download.folderList", 2);
+		profile.setPreference("browser.download.dir", "D:\\ACD");
+		
+		//create object of FirefoxOptions class
+		FirefoxOptions options = new FirefoxOptions();
+		//call setProfile method
+		options.setProfile(profile);
+		
+		//create object FirefoxDriver class
+		FirefoxDriver driver = new FirefoxDriver(options);
+		driver.get("https://www.google.com");
+		
+	- New profile
+		//load existing firefox profile
+		ProfilesIni profile = new ProfilesIni();
+		
+		//create object of FirefoxProfile class
+		FirefoxProfile myProfile = profile.getProfile("Andrew");
+		
+		//create object of FirefoxOptions class
+		FirefoxOptions options = new FirefoxOptions();
+		options.setProfile(myProfile);
+		
+		//specify the options object in the constructor
+		FirefoxDriver driver = new FirefoxDriver(options);
+		
+		//launch browser with new profile and go to google.com
+		driver.get("https://www.google.com");
+	
+	- Open in Private mode
+		- options.addArguments("--private");
+		
+---------------------------------------------------
+
+Headless (NON GUI) Browser
+	- used for parallel testing
+	- saves resources and memory
+	- reduces execution time
+	- Chrome and Firefox Only
+	- use Options class to set headless mode
+	
+	ex. Chrome
+		//create object of ChromeOptions class
+		ChromeOptions options = new ChromeOptions();
+		//execute in Headless mode
+		options.addArguments("--headless");
+		
+		System.out.println("Chrome is running in Headless mode!");
+		
+		//create object of ChromeDriver class
+		ChromeDriver driver = new ChromeDriver(options);
+		driver.get("https://www.google.com");
+		
+		//capture title
+		String title = driver.getTitle();
+		//capture url
+		String currenturl = driver.getCurrentUrl();
+		//print to screen
+		System.out.println("Page title is: "+title);
+		System.out.println("Page url is: "+currenturl);
+		
+	ex. Firefox
+		//create object FirefoxOptions class
+		FirefoxOptions options = new FirefoxOptions();
+		//run in headless mode
+		options.addArguments("--headless");
+		
+		System.out.println("Firefox is running in Headless mode!");
+		
+		// create object of FirefoxDriver class and pass the options object to the constructor
+		FirefoxDriver driver = new FirefoxDriver(options);
+		driver.get("https://www.google.com");
+
+		// capture title
+		String title = driver.getTitle();
+		// capture url
+		String currenturl = driver.getCurrentUrl();
+		// print to screen
+		System.out.println("Page title is: " + title);
+		System.out.println("Page url is: " + currenturl);
+		
+---------------------------------------------------
+	
+Handling SSL Certificates in Selenium
+	- Secure Socket Layer
+	- creates a secure connection between app server and browser
+	- uses Https
+	Chrome
+		- ChromeOptions options = new ChromeOptions();
+		- options.setAcceptInsecureCerts(true);
+		ex.
+			
+		//create object of ChromeOptions class
+		ChromeOptions options = new ChromeOptions();
+		//calling method setAcceptInsecureCerts and passing parameter "true"
+		options.setAcceptInsecureCerts(true);
+		
+		//create object of ChromeDriver class and specify the options object
+		ChromeDriver driver = new ChromeDriver(options);
+		//launch website with insecure cert
+		driver.get("https://expired.badssl.com/");
+		
+	Firefox
+		// create object of ChromeOptions class
+		FirefoxOptions options = new FirefoxOptions();
+		// calling method setAcceptInsecureCerts and passing parameter "true"
+		options.setAcceptInsecureCerts(true);
+
+		// create object of ChromeDriver class and specify the options object
+		FirefoxDriver driver = new FirefoxDriver(options);
+		// launch website with insecure cert
+		driver.get("https://expired.badssl.com/");
+	
+---------------------------------------------------
+	
+Cookie Handling in Selenium
+	- info on your website visit
+	- key value pair (name, value, domain, expiry date...etc
+	- session cookie - temporary, deleted when you close browser
+	- persistent cookie - permanent, on hard drive until expired or deleted
+	Selenium handles cookies
+		- Get cookie
+		- Add cookie
+		- Delete cookie
+	ex.
+		// create object of ChromeDriver class and specify the options object in
+		// constructor
+		ChromeDriver driver = new ChromeDriver();
+		// launch website 
+		driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+		
+		//create object of cookie
+		Cookie myCookie = new Cookie("testName","testValue");
+		
+		//ADD myCookie to the browser manually
+		driver.manage().addCookie(myCookie);
+		
+		//get cookies at runtime
+		//selenium returns all cookies stored in the browser in the set collection
+		Set <Cookie> allCookies = driver.manage().getCookies();
+				
+		//iterate over the collection set show cookies added
+		for(Cookie ck :allCookies) {
+			//print cookie info
+			System.out.println(ck.getName()+ " === "+ck.getDomain()+" === "+ck.getExpiry());
+		}
+		
+		//delete the cookie
+		driver.manage().deleteCookieNamed("orangehrm");
+		
+		Set <Cookie> allCookiesAfterDelete = driver.manage().getCookies();
+		
+		System.out.println("==================AFTER DELETE=========================");
+		
+		// iterate over the collection set show cookies added
+		for (Cookie ck : allCookiesAfterDelete) {
+			// print cookie info
+			System.out.println(ck.getName() + " === " + ck.getDomain() + " === " + ck.getExpiry());
+		}
+
+---------------------------------------------------
+	
+Capture Screenshots
+	- TakeScreenshot Interface
+		- contains methods to take a screenshot of the application
+		- supports file, base64 formats
+		- Apache commons API copies screenshot from one location to another
+		- can't take entire page screenshot with scrolling (LIMITATION)
+		ex.
+		// create object of ChromeDriver class
+		ChromeDriver driver = new ChromeDriver();					// constructor
+		// launch website
+		driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+		Thread.sleep(5000);											//wait time to slow down Selenium
+		//take screenshot
+		captureScreenshot(driver, "loginPage");//call function captureScreenshot and put in "loginPage"
+		
+		// enter username
+		WebElement uname = driver.findElement(By.name("username"));	//find username element by name
+		uname.sendKeys("Admin");									//enter "Admin" in username textbox
+		Thread.sleep(5000);
+		// take screenshot
+		captureScreenshot(driver, "userName");						//call function captureScreenshot and put in "userName"
+		
+		// enter password
+		WebElement pword = driver.findElement(By.name("password"));	//find password element by name
+		pword.sendKeys("admin123");									//enter "admin123" in password textbox
+		Thread.sleep(5000);
+		// take screenshot
+		captureScreenshot(driver, "passWord");						//call function captureScreenshot and put in "passWord"
+
+		// click login button
+		WebElement btnLogin = driver.findElement(By.xpath("//button[@type='submit']"));//find login button element by xpath
+		btnLogin.click();															   //click login
+		Thread.sleep(5000);
+		// take screenshot
+		captureScreenshot(driver, "dashBoard");						//call function captureScreenshot and put in "dashBoard"
+		
+	}
+		//create a reusuable function to take multiple screenshots
+		public static void captureScreenshot(ChromeDriver driver, String fileName){
+			TakesScreenshot sc = driver;							//create reference of TakesScreenshot interface
+			File image = sc.getScreenshotAs(OutputType.FILE);		//source file using reference getScreenshotAs method. returns screenshot in the form of "File"
+			System.out.println("taking screenshot");
+			//create another object of File class and store the screenshot in "fileName"
+			File myFile = new File("C:\\Users\\jdaco\\eclipse-workspace\\AndrewSeleniumTraining\\Screenshots\\"+fileName+".png");
+			try {													//exception block
+				FileUtils.copyFile(image, myFile);					//call FileUtils from Apache common library to copy the file
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+---------------------------------------------------
+
+AShot API (Capture full page screenshot)
+	- take FULL PAGE SCREENSHOT EX.
+		// create object of ChromeDriver class
+		ChromeDriver driver = new ChromeDriver(); // constructor
+		// launch website
+		driver.get("https://www.facebook.com/privacy/policy/?entry_point=facebook_page_footer");
+
+		// capture FULL PAGE screenshot using AShot Library
+		Screenshot fpscreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
+
+		File myFile = new File("C:\\Users\\jdaco\\eclipse-workspace\\AndrewSeleniumTraining\\Screenshots\\AShotImage1.png");
+		System.out.println("taking screenshot");
+		ImageIO.write(fpscreenshot.getImage(), "png", myFile);
+		
+	- take regular screenshot ex.
+		//capture screenshot of screen but NOT THE FULL PAGE using AShot Library
+		Screenshot screenshot = new AShot().takeScreenshot(driver);
+		
+		File myFile = new File("C:\\Users\\jdaco\\eclipse-workspace\\AndrewSeleniumTraining\\Screenshots\\AShotImage1.png");
+		System.out.println("taking screenshot");
+		ImageIO.write(screenshot.getImage(), "png", myFile);
+		
+		
+		
+**************************************TestNG***********************************************************
+
+What is TestNG?
+	- Open source Automation Framework
+	- Unit tests
+	- Integration tests
+	- System tests
+	- Selenium tests
+	- better than Junit
+	- Integrates with Eclipse
+	- Integrates with Maven
+	- Developed in Java
+Advantages
+	- no java main() method needed
+	- contains assertions (validations to check whether the application is working or not)
+	- create pre-condition and post-condition script
+	- supports parallel execution
+	- Grouping of test cases
+	- Generates a report
+	
+Writing first Automation Test Case with TestNG
+	- ex.
+	import org.openqa.selenium.chrome.ChromeDriver;
+	import org.testng.annotations.Test;
+
+	public class SampleTestCase {
+
+	//No main() method needed
+	@Test
+		public void launchGooglePage() {
+
+		// create object of ChromeDriver class
+		ChromeDriver driver = new ChromeDriver();// constructor
+		// launch website
+		driver.get("https://www.google.com");
+		
+
+		}
+
+	}
+
+---------------------------------------------------
+
+Assertions
+	- known as Checkpoint
+	- compares actual result with expected
+	- Test case passes if Assertion is passed - assertEquals()
+	- If any Assertion fails, Test case is marked as failed 
+	- assertNotEquals()
+	- assertTrue()
+	- assertFalse()
+	Types
+		- Hard
+			- @Test method will fail immediately when assertion fails
+			- Remaining lines of script of @Test will not execute
+		- Soft
+			- @Test method does not fail immediately when the assertion fails
+			- Remaining lines of script will execute
+			- At some point the user will have to set assertAll() where @Test will fail
+
+---------------------------------------------------
+			
+Priority Attribute
+	- Sets the order of TC Execution
+	- by default TestNG executes the TC's in Alphabetical order
+	- you can set the priority of @Test to change the order of execution
+	- Lower priority (first) ===> Higher Priority (last)
+	ex.
+	//default order would be a --> b--> c--> d--> alphabetical
+	
+	//using priority I want b--> a--> d--> c--> user defined
+	
+	@Test(priority = 2)
+	public void a() {
+		
+		System.out.println("This is test case a!");
+	}
+
+	@Test(priority = 4)
+	public void c() {
+		
+		System.out.println("This is test case c!");
+	}
+
+	@Test(priority = 1)
+	public void b() {
+		
+		System.out.println("This is test case b!");
+	}
+
+	@Test(priority = 3)
+	public void d() {
+		
+		System.out.println("This is test case d!");
+	}
+	
+	- Duplicate Priority - In the case of two test cases with the SAME PRIORITY:
+		- TestNG will revert back to Alphabetical Order of execution
+	- Negative Priority
+		- Negative priority first then positive values
+	- Partial Priority
+		- If NO PRiority specified, it is assigned 0 priority
+		- Zero priority values get excuted before positive values
+
+---------------------------------------------------
+
+Excluding test cases from execution
+	- possible reasons to exclude:
+		- Bug opened but not fixed
+		- Requirement has changed so TC needs updating
+		- Feature has been temporarily removed from application
+	- approach:
+		- enabled = false
+		- @ignore
+		- <exclude> tag in testNG.xml file
+		ex.
+		@Ignore				//TC a() ignored because of the @Ignore Annotation
+		@Test(priority = 2)
+		public void a() {
+			
+			System.out.println("This is test case a!");
+		}
+		
+		//this will be excluded because of "enabled = false"
+		@Test(priority = 1, enabled = false)
+		public void b() {
+			
+			System.out.println("This is test case b!");
+		}
+
+---------------------------------------------------
+
+Invocation Count - Execute @Test Multiple times
+	- invocationCount=n 
+
+---------------------------------------------------
+	
+Execute TC using testNG.xml
+	- xml file that organizes the TC's
+	- Contains Suite and Test tag
+	- Execute @Test
+	- Execute groups
+	- Parallel execution
+	- Pass parameters to @Test
+	
+	example of a testNG.xml
+	
+	<?xml version="1.0" encoding="UTF-8"?>
+	<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+	<suite name="Suite">
+		<test thread-count="5" name="Mustiple Classes Test">
+			<classes>
+				<class name="testng.demo.OrangeHRMTestCasePriorityDemo">
+					<methods>
+						<exclude name="logout"></exclude>
+						<exclude name="closeBrowser"></exclude>
+					</methods>  
+				</class>
+       
+				<class name="testng.demo.TimesheetDemo">
+				</class>	
+			</classes>
+		</test> <!-- Mustiple Classes Test -->
+	</suite> <!-- Suite -->
+
+---------------------------------------------------
+
+@Parameters Annotation - used to pass test data from the testNG.xml file
+	- applied on @Test
+	- Invoke @Test method with the parameter values - passed on to the script
+	- are located in the testNG.xml file
+	- one method can have many parameters
+	ex
+		<suite name="Suite">
+		<test thread-count="5" name="Parameter Test">
+			<parameter name="username" value="Admin"></parameter>
+			<parameter name="password" value="admin123"></parameter>
+			<classes>
+				<class name="testng.demo.ParametersDemo"/>
+			</classes>
+		</test> <!-- Parameter Test -->
+		</suite> <!-- Suite -->
+		
+		// login to OrangeHRM
+		@Parameters({"username", "password"})
+		@Test(priority = 1)
+		public void loginToApplication(String username, String password) throws InterruptedException {
+			// create object of ChromeDriver class
+			
+			ChromeDriver driver = new ChromeDriver(); // constructor
+			
+			// launch website
+			driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+			Thread.sleep(2000); // wait time to slow down Selenium
+
+			// enter username
+			WebElement uname = driver.findElement(By.name("username")); // find username element by name
+			uname.sendKeys(username); // enter "Admin" in username textbox (from the parameter in the testNG.xml)
+
+			// enter password
+			WebElement pword = driver.findElement(By.name("password")); // find password element by name
+			pword.sendKeys(password); // enter "admin123" in password textbox (from the parameter in the testNG.xml)
+
+			// click login button
+			WebElement btnLogin = driver.findElement(By.xpath("//button[@type='submit']"));// find login button element by xpath
+																							
+			btnLogin.click(); // click login
+			Thread.sleep(5000); // wait for page to load
+
+		}
+
+---------------------------------------------------
+		
+Parameter with @Optional Annotation
+	- @Optional will provide a default value in case one of the other parameters are not found in testNG.xml
+	- public void loginToApplication(@Optional("wsuperuser") String username, String password)
+
+---------------------------------------------------
+	
+@DataProvider Annotation
+	- Data Driven Testing
+		- execute the same TC with different set of test data
+		- increases probability of finding defects
+		- known as Parameterization
+		- Test data is separate from @Test
+		- DataProvider supplied data to @Test
+	- Applied on method
+	- method is considered test data provider to @Test
+	- Method return [][] Object array OR iterator<Object[]>
+	- @Test is mapped with data provider method
+	- @Test is executed with each set of Test data
+	ex.
+	 @DataProvider
+		public Object[][] getTestData(){
+			
+			Object[][] data = new Object[2][2];
+			
+			data[0][0] = "Admin";
+			data[0][1] = "admin123";
+			data[1][0] = "wsuperuser";
+			data[1][1] = "pumpkin1";
+					
+			return data;
+			
+	@Test(priority = 1, dataProvider = "getTestData")	
+
+---------------------------------------------------
+	
+Groups
+	- grouping @Test cases
+	- one TC can be assigned to multiple groups
+	- specify group in testNG.xml to run
+	ex
+	 <groups>
+  		<run>
+  			<include name="login"></include>
+  			<include name="reset"></include>
+  		</run>
+  	</groups>
+	
+	
+	@Test(groups="login")
+	public void login_1() {
+		System.out.println("Login 1");	
+	}
+	
+	@Test(groups="login")
+	public void login_2() {
+		System.out.println("Login 2");	
+	}
+
+	@Test(groups="reset")
+	public void resetPassword_1() {
+		System.out.println("Reset Password 1");	
+	}
+	
+	@Test(groups="reset")
+	public void resetPassword_2() {
+		System.out.println("Reset Password 2");	
+	}
+	
+	
+Multiple Groups
+	ex.
+	<groups>
+  		<run>
+  			<include name="sanity"></include>//specify group to run
+  		</run>
+	</groups>
+    <classes>
+    	<class name="testng.demo.GroupDemo"/>//specify all the classes to run and put in the order to run them
+      	<class name="testng.demo.SignUpTest"/>
+    </classes>
+	
+	//sanity
+	@Test(groups= {"login", "sanity"})//login is in multiple groups
+	public void login_1() {
+		System.out.println("Login 1");	
+	}
+	
+---------------------------------------------------
+
+dependsOn Methods TestNG Attribute
+	- specify dependency between 2 test cases
+	- specifies the order of execution
+	- @Test will be skipped if depends on method fails
+	- One @Test can depend on Multiple @Test cases
+	ex.
+	@Test
+	public void applyLeave() {
+		Assert.assertEquals(true, true);//applyLeave will pass
+		System.out.println("Leave applied for");
+		
+	}
+	
+	//should only be executed only if applyLeave passes
+	@Test(dependsOnMethods = "applyLeave")
+	public void approveLeave() {
+		System.out.println("Leave has been approved");
+	}
+	
+---------------------------------------------------
+
+@Test Annotation
+	- Method is considered as a Test Case
+	- Annotation can be applied on a method or Class
+	- when applied on a Class then all the Methods of the Class become Test Cases
+	- TC Details are present in the Test Report
+	ex.
+	
+	@Test             //applied to the Class instead of each Method
+	public class TestAnnotationDemo {
+
+	
+		public void login() {
+
+		System.out.println("Login is executed");
+
+		}
+
+	
+		public void logout() {
+
+		System.out.println("Logout is executed");
+
+		}
+	}
+	
+---------------------------------------------------
+	
+@BeforeMethod & @AfterMethod Annotations
+
+	- @BeforeMethod
+		- executes before running each @Test Method
+		- contains a pre-condition
+	- @AfterMethod
+		- executes after running each @Test Method
+		- contains a post-condition
+	ex.
+	//login pre-condition
+	@BeforeMethod
+	public void login() {
+		System.out.println("please login");
+	}
+
+	//logout post-condition
+	@AfterMethod
+	public void logout() {
+		System.out.println("please logout");
+	}
+	
+	//add to cart login is a pre-condition
+	@Test
+	public void addToCart() {
+		System.out.println("added to cart");
+	}
+	
+	//remove from cart logout is a post-condition
+	@Test
+	public void removeFromCart() {
+		System.out.println("removed from cart");
+	}
+	
+---------------------------------------------------
+	
+@BeforeTest & @AfterTest Annotations
+
+	- @BeforeTest 
+		- executes before running each Test in testNG.xml
+		- contains a pre-condition
+	- @AfterTest 
+		- executes after running each Test in testNG.xml
+		- contains a post-condition
+	ex.
+		@BeforeTest
+	public void openBrowser() {
+		System.out.println("browser opened");
+	}
+	
+	@Test(priority=1)
+	public void login() {
+		System.out.println("login completed");
+	}
+
+	@Test(priority=2)
+	public void search() {
+		System.out.println("search completed");
+	}
+	
+	@Test(priority=3)
+	public void logout() {
+		System.out.println("logout completed");
+	}
+	
+	@AfterTest
+	public void closeBrowser() {
+		System.out.println("browser closed");
+	}
+	
+---------------------------------------------------
+	
+@BeforeSuite & @AfterSuite Annotations
+	
+	- @BeforeSuite 
+		- executes before running all Tests in testNG.xml
+		- contains a pre-condition
+	- @AfterSuite 
+		- executes after running all Tests in testNG.xml
+		- contains a post-condition
+		- usually a cleanup script
+	ex.
+	@BeforeSuite
+	public void createConnection() {
+		System.out.println("DB Connection created");
+	}
+	
+	@AfterSuite
+	public void closeConnection() {
+		System.out.println("DB Connection closed");
+	}
+	
+	
+	@Test
+	public void testLogin() {
+		System.out.println("login completed");
+	}
+	
+---------------------------------------------------
+	
+@BeforeClass & @AfterClass Annotations
+
+	- @BeforeClass
+		- executes before running the 1st @Test method of the class
+		- contains a pre-condition
+	- @AfterClass
+		- executes after running all Tests methods of a class
+		- contains a post-condition
+	ex.
+	@BeforeClass
+	public void login() {
+		System.out.println("user is logged in");
+	}
+	
+	@AfterClass
+	public void logout() {
+		System.out.println("user is logged out");
+	}
+	
+	
+	@Test(priority=1)
+	public void search() {
+		System.out.println("look for product");
+	}
+	
+	@Test(priority=2)
+	public void addCart() {
+		System.out.println("added to cart");
+	}
+	
+	@Test(priority=3)
+	public void checkout() {
+		System.out.println("checkout complete");
+	}
+	
+---------------------------------------------------
+	
+@BeforeGroup & @AfterGroup Annotations
+
+	- @BeforeGroup
+		- executes before running the 1st @Test method of a specific Group
+		- contains a pre-condition
+	- @AfterClass
+		- executes after all running all Tests of a specific Group
+		- contains a post-condition
+	ex.
+	<suite name="Suite">
+	<test thread-count="5" name="Groups Test">
+		<groups>
+			<run>
+				<include name="B"></include>
+			</run>
+		</groups>
+		<classes>
+			<class name="annotations.demo.BeforeAfterGroupDemo"/>
+		</classes>
+	</test> <!-- Groups Test -->
+	</suite> <!-- Suite -->
+	
+	@BeforeGroups(groups = {"A","B"})
+	public void beforeGroups() {
+		System.out.println("this is before groups");
+	}
+	
+	@AfterGroups(groups = {"A","B"})
+	public void afterGroups() {
+		System.out.println("this is after groups");
+	}
+	
+	
+	@Test(groups = "A")
+	public void testA() {
+		System.out.println("This is test A");
+	}
+	
+	
+	@Test(groups = "B")
+	public void testB() {
+		System.out.println("This is test B");
+	}
+	
+---------------------------------------------------
+	
+TestNG Listeners
+	- Listeners are an Interface so don't have implementation
+	- you cannot create an object of a Listener because Java does not allow to create objects of Interface
+	- override abstract methods
+	- Listen for Execution Events (status, name etc)
+	- Allows to perform actions during execution
+		- Enable/disable test case
+		- take screenshots
+		- etc
+	- Types:
+		- ITestListener
+		- ISuiteListener
+		- IAnnotationTransformer
+		- IInvokeMethodListener
+		
+- ITestListener Interface
+
+	- ITestListener Methods - Automatically Called
+		- onTestStarts()//called before each test case starts running
+		- onTestSuccess()//called after each test case passes
+		- onTestFailure()//called after each test case fails
+		- onTestSkipped()//called if a test case is skipped
+		- onStart()//called before running the first test case of the testNG suite
+		- onFinish()//called after the last test case has run
+		
+	- Automatically called based on the status of the TC
+	- to implement first create a Java Class that implements the ITestListener Interface
+	- then override the Abstract method based on your requirements
+	ex.
+	<suite name="Suite">
+		<listeners>
+			<listener class-name = "listener.demo.ItestListenerDemo"></listener>
+		</listeners>
+		<test thread-count="5" name="ITestListenerRegression">
+		<classes>
+			<class name="listener.demo.OrangeHRMTest"/>
+		</classes>
+		</test> <!-- ITestListener -->
+	</suite> <!-- Suite -->
+	
+	@Override
+	public void onTestStart(ITestResult result) {
+		System.out.println("Test case: " +result.getName()+" has started.");	
+	}
+
+	@Override
+	public void onTestSuccess(ITestResult result) {
+		System.out.println("Test case: " +result.getName()+" has passed.");
+	}
+
+	@Override
+	public void onTestFailure(ITestResult result) {
+		System.out.println("Test case: " +result.getName()+" has failed.");
+	}
+
+	@Override
+	public void onTestSkipped(ITestResult result) {
+		System.out.println("Test case: " +result.getName()+" has been skipped.");
+	}
+
+	@Override
+	public void onStart(ITestContext context) {
+		System.out.println("Test case: " +context.getCurrentXmlTest().getName()+" has started.");
+	}
+
+	@Override
+	public void onFinish(ITestContext context) {
+		System.out.println("All test cases have completed!");
+	}
+---------------------------------------------------
+	- ISuiteListener Interface
+	
+	ex.
+	<suite name="ISuiteListener Sanity">
+		<listeners>
+			<listener class-name = "listener.demo.ISuiteListenerDemo"></listener>
+		</listeners>	
+		<test thread-count="5" name="ISuite">
+			<classes>
+				<class name = "listener.demo.OrangeHRMTest"></class>
+			</classes>classes>
+		</test> <!-- ISuite -->
+	</suite> <!-- Suite -->
+	
+	@Override
+	public void onStart(ISuite suite) {
+		System.out.println("inside overridden onStart method");
+		System.out.println("Suite "+suite.getName()+" has started!");
+		
+	}
+
+	@Override
+	public void onFinish(ISuite suite) {
+		System.out.println("inside overridden onFinish method");
+		System.out.println("Suite has finished! ");
+		
+---------------------------------------------------
+	
+IInvokeMethodListener Interface
+
+	- beforeInvocation() is invoked before each @Test
+	- aterInvocation() is invoked after each @Test 
+	ex.
+	<suite name="InvokeMethodSuite">
+		<listeners>
+			<listener class-name = "listener.demo.InvokeListenerDemo"></listener>
+		</listeners>	
+	<test thread-count="5" name="TestInvokeListener">
+		<classes>
+			<class name="listener.demo.OrangeHRMTest"/>
+		</classes>
+	</test> <!-- Test -->
+	</suite> <!-- Suite -->
+	
+	@Override
+	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {//called before each @Test
+		System.out.println("inside overridden beforeInvocation method");
+		System.out.println("Test "+method.getTestMethod().getMethodName()+" has started ");
+	}
+
+	@Override
+	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {//called after each @Test
+		System.out.println("inside overridden afterInvocation method");
+		System.out.println("Test "+method.getTestMethod().getMethodName()+" has completed ");
+		
+	}
+	
+---------------------------------------------------
+	
+IAnnotationTransformer Interface
+
+	- allows you to modify the default behavior of @Test at runtime
+	- use case: you have 100 @Test in a suite
+		- you run the suite and 10 @Test failed because of a know bug that was reported and not yet fixed
+		- you can disable these 10 test cases until the bug has been fixed
+		- you can disable the @Test at runtime using IAnnotationTransformer instead of adding "enabled = false" to each @Test, which could be in different classes
+		
+---------------------------------------------------
+		
+Maven
+	- Build Management Tool
+	- Open source tool from Apache
+	- Manages project jar files
+	- Define standard project structure across the team
+	- works with Eclipse
+	- commands executed from the command prompt as well
+	- works based on POM.xml
+	- Works with Jenkins
+	
+	- Creating a Maven Project
+		- archType - defines project structure
+		- artifact id - project name
+		- Group id - unique id to identify the project
+		
+	- Structure
+		- src/main/java - create different packages to write automation framework code (Framework code)
+		- src/main/resources - keep files that the packages need to read data
+		- src/test/java - create different packages to create the test classes for test cases (Test scripts)
+		- src/test/resources - keep files that the packages need to read data for the test cases
+		- src package - compiled classes
+			- main - framework related compiled classes
+			- test - test related compiled classes
+		- target package - stores the reports
+		- pom.xml - main file of the project to maintain the project dependencies
+		- add selenium depencency
+		 <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+			<dependency>
+				<groupId>org.seleniumhq.selenium</groupId>
+				<artifactId>selenium-java</artifactId>
+				<version>4.27.0</version>
+			</dependency>
+			
+		- add testNG depencency
+		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
+			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>7.10.2</version>
+				<scope>test</scope>
+			</dependency>
+
+	- Repositories
+		- contain all jar files
+		- Maven download jar's from it's own repository
+		- maintained by Maven
+		- 3 types:
+		Local - 
+			- available on local machines
+			- Maven download JAR's to local repository (.m2 folder)C:\Users\jdaco\.m2\repository
+		Central -
+			- Hosted on web
+			- conatins jar files
+			- maintained by Apache
+		Remote -
+			- Private repository for an organization
+			
+	- POM.xml
+		- Project Object Model
+		- contains project information (jar files, plugins etc)
+		- must be error free to run project
+		- Maven reads the pom.xml when project runs
+		- Mandatory file
+		- Group id. Artifact id, Packaging: JAR, WAR
+		- dependencies - jar files
+		- plugins
+			- Maven compiler plugins
+			- Surefire test plugins
+
+---------------------------------------------------
+			
+Maven Build Life Cycle Phases and Plugins
+	- 6 phases of build life cycle and each requires a plugin executed automatically
+	- validate
+		- validate project has all the information
+	- compile
+		- compile code
+		- Maven compiler plugin specified in pom.xml
+		- ex
+				<packaging>jar</packaging>
+	
+				<build>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-compiler-plugin</artifactId>
+							<version>3.13.0</version>
+							<configuration>
+								<source>1.8</source>
+								<target>1.8</target>
+							</configuration>
+						</plugin>
+					</plugins>
+				</build>
+		- to run it right-click on the project name and choose "run as" --> Maven build... and enter "compile" in the "Goals" field.
+		- click apply then Run
+	- test
+		- used to execute the automation test cases
+		- Uses SureFire plugin
+		- ex
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.5.2</version>
+				<configuration>
+					<suiteXmlFiles>
+						<suiteXmlFile>orangeHRMtestng.xml</suiteXmlFile>
+					</suiteXmlFiles>
+				</configuration>
+			</plugin>
+		- - to run it right-click on the project name and choose "run as" --> Maven build... and enter "test" in the "Goals" field.
+	- package
+		- package tested code to JAR file
+		- C:\Users\jdaco\eclipse-workspace\QA-Automation>mvn package
+	- install
+		- generates JAR file
+		- put packaged JAR to local repository
+		- C:\Users\jdaco\eclipse-workspace\QA-Automation>mvn install
+		- C:\Users\jdaco\.m2\repository\com\test\QA-Automation\0.0.2-SNAPSHOT
+	- deploy
+		- copy JAR from local to remote repository (Maven Central Repository)
+		- needs the Maven deploy plugin, valid repository URL, username and password
+		- not really useful for automation testing
+		
+---------------------------------------------------
+		
+Cloud Testing
+	- Cloud Service Provider Vendors
+		- Saucelab
+		- Browser STACK
+		- AWS
+		- Azure
+		- GCP
+		
+---------------------------------------------------
+		
+Automation on SauceLabs
+	- first get an account
+	- Generate URL key
+	- write sample test script
+	- Create capability object to specify configuration (OS, browser etc)
+	- run test case (OrangeHRM test case)
+	- check SauseLabs result
+	
+---------------------------------------------------
+	
+POM (Page Object Model)
+	- Design pattern not a framework
+	- Keep Locators and Test Cases in different classes
+	- One locator class for each page
+	- Easy to make changes in the script
+	- Easy maintenance
+	- Understood by others
+
+---------------------------------------------------
+	
+Page Factory Model
+	- In built design model provided by Selenium to maximize the page elements
+	- used to write and initialize the locators of a webpage
+	- Uses the @FindBy annotation
+	- @FindBy annotation works with all Selenium locators
+	- PageFactory contains initElement() to initialize all the elements of page class
+	
+---------------------------------------------------
+	
+Apache POI
+	- Open source Java library
+	- developed by Apache
+	- supports Read and Write operations
+	- works on Microsoft docs
+	- Selenium can use it to read test data from excel (XLS and XLSX)
+	
+	XLS Classes			Interface			XLSX Classes
+	-----------         ---------           ------------
+	HSSFWorkbook		Workbook			XSSFWorkbook
+	HSSFSheet			Sheet				XSSFSheet
+	HSSRRow				Row					XSSFRow
+	HSSFCell			Cell				XSSFCell
+	
+	- you cannot create an object of the interface so first we need to create an object of the class that implements the interface
+	ex.
+	public class ExcelUtility {
+	
+	//make this a static method so you don't have to create an object of this method
+	public static String getTestData(int rowNumber, int cellNumber) throws InvalidFormatException, IOException {
+		
+		//create a file object that will reference an excel file
+		File file = new File("D:\\selenium-java\\javacode\\TestData.xlsx");
+		
+		//create workbook object
+		XSSFWorkbook book = new XSSFWorkbook(file);
+		
+		//create a sheet object and get the first sheet index 0
+		XSSFSheet sheet = book.getSheetAt(0);
+		
+		//specify row and cell number to get the data
+		return sheet.getRow(rowNumber).getCell(cellNumber).getStringCellValue();
+		
+		}
+	}
+
+	public void loginWithValidUserNameAndValidPassword() throws InvalidFormatException, IOException {
+		
+		// create a reference of the LoginPage class so we can use the methods
+		LoginPage loginPage = new LoginPage();
+		// call method loginToApplication with username and password
+		loginPage.loginToApplication(ExcelUtility.getTestData(1, 0), ExcelUtility.getTestData(1, 1));
+	}
+
+---------------------------------------------------
+
+Properties file
+	- contains data in key - value pairs
+	- .properties file extension
+	- Java has a properties class to read the data
+	- test data, configuration data
+	ex.
+	public class PropertiesUtility {
+	
+	//in order to call getData method we have to create the object of the PropertiesUtility class
+	//make this method static so you can call it without creating an object of the class
+	public static String getData(String key) throws IOException {
+		
+		//create a file class object that will reference the properties file
+		File file = new File("D:\\selenium-java\\javacode\\TestData.properties");
+		
+		//create fileReader class object with the file class object
+		FileReader reader = new FileReader(file);
+		
+		//properties class object contains all the data in the file
+		Properties prop = new Properties();
+		
+		//load properties file with the reader class object
+		prop.load(reader);
+		
+		//call getValue() method
+		prop.get(key);
+		
+		//type cast the return vale as String as it originally returns a type object
+		return (String) prop.getProperty(key);
+		}
+	}
+	
+	public void loginWithValidUserNameAndValidPassword() throws InvalidFormatException, IOException {
+		
+		// create a reference of the LoginPage class so we can use the methods
+		LoginPage loginPage = new LoginPage();
+		// call method loginToApplication with username and password
+		//pass the data key = username and value = password from the properties file
+		loginPage.loginToApplication(PropertiesUtility.getData("username"),(PropertiesUtility.getData("password")));
+		
+	}
+
+---------------------------------------------------
+
+Log4j
+	- open source logging framework
+	- provided by Apache
+	- writes user defined application logs
+	- Log4j config file
+	- Logger
+		- writes message in file/console
+		- 6 types of loggers
+	- Appenders				
+		- specifies where to write logs
+		- ConsoleAppenders
+		- FileAppender
+		- RollingFileAppenders
+	- Layout
+		- defines format of logs in file
+	- Levels
+		- ALL
+		- DEBUG
+		- INFO
+		- WARN
+		- ERROR
+		- FATAL
+		- OFF
+		
+		//adding logging with log4j. create logger object
+		Logger log = LogManager.getLogger(LoginPage.class);
+		
+		//write log message
+		log.info("login button clicked");
+
+---------------------------------------------------
+	
+Extent Report
+	- third party API to generate HTML test report
+	- integrates with Maven and TestNG
+	- available in opensource version
+	- contains all test cases with their status
+	- allows sttach application screenshot
+	- contains Exception info
+	- show total execution time
+	- shows Chart representations
+	ex.
+	public class ExtentReportUtils {
+	
+	/*
+	 * ExtentTest Object is required to create a Test
+	 */
+	public static ExtentTest test;
+
+	/*
+	 * ExtentReport object is required to create a report.
+	 */
+	public static ExtentReports report;
+
+	/*
+	 * This method is invoked in @BeforeSuite annotation to initialize the report.
+	 */
+	public static void setUpReport() {
+		report = new ExtentReports();
+		ExtentSparkReporter spark = new ExtentSparkReporter("report/execution.html");
+		report.attachReporter(spark);
+	}
+
+	/*
+	 * Creates the test case, testName parameter accepts name of the @Test method
+	 */
+	public static void createTest(String testName) {
+		test = report.createTest(testName);
+	}
+
+	/*
+	 * This method adds the step in each test case. In the parameter you can specify
+	 * the Message or step
+	 */
+	public static void addStep(String stepMessage) {
+		test.info(stepMessage, MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot()).build());
+	}
+
+	/*
+	 * This method captures the screenshot of application. It is invoked in addStep
+	 * method of this class.
+	 */
+	public static String captureScreenshot() {
+
+		TakesScreenshot screenshot = (TakesScreenshot) BaseTest.driver;
+
+		File file = screenshot.getScreenshotAs(OutputType.FILE);
+
+		byte[] fileContent = null;
+		try {
+			fileContent = FileUtils.readFileToByteArray(file);
+
+		} catch (IOException e) {
+
+		}
+
+		String str = Base64.getEncoder().encodeToString(fileContent);
+		System.out.println(str);
+
+		return str;
+	}
+	
+	/*
+	 * This methods flushes the report. It is invoked at the end of execution.
+	 */
+
+	public static void flushReport() {
+		report.flush();
+	}
+
+}
+
+---------------------------------------------------
+	
+Git
+	- version control
+	- allows sharing of code with team members
+	- open source code management tool
+	Workflow
+		- Working directory (un-staged area)
+		- Local repository (staged area)
+		- Git Hub repository 
+	Commands
+		- git --version
+		- git init
+		- git remote add origin GitHubRepoURL
+		- git remote -v
+		- git status - shows the list of files that have been updated
+		- git add fileName
+		- git add . - add all changed files from working directory to the git local repository
+		- git commit -m "message"
+		- git push -u origin master
+		- git pull origin master
+		- git clone GitHubRepoAddress
+	Git Branching
+		- creates separate copies of the code
+		- branch can be created for specific features
+		- branches are merged together to have final code
+	commands
+		- git branch - checks list of local branches
+		- git branch branchName - creates a new branch
+		- git checkout branchName - switch to a new branch
+		- git push -u origin branchName - push code to specific branch
+		- git pull origin branchName - pull specific branch code from gitHub
+		- git merge branchName - merge branch with master branch
+			- 1. push the code from your branch to gitHub
+			- 2. switch to master branch
+			- 3. pull from the master branch
+			- 4. run the git merge command
+			- 5. run git push
+			
+Pushing the QA-Automation project to GitHub
+	- 1. create a github repository
+	- 2. init the local repository - git init
+	- 3. map github repo with local repo - git remote add origin git@github.com:yardi1966/LearningSelenium.git
+	- 4. move changes from working dir to local repo - git add
+	- 5. commit the changes - git commit
+	- 6. push the code - git push -u origin master
+
+---------------------------------------------------
+
+Jenkins CI/CD
+D:\jdaco\Downloads>java -jar jenkins.war --httpPort=8080 --enable-future-java
+
+http://localhost:8080/
+
+
+	- CI/CD Continuous Integration / Continuous Deployment
+	- Development Practice -> Continuous development -> continuous testing -> continuous integration -> continuous deployment -> continuous monitoring
+	- open source
+	- developed in Java
+	process:
+		- developer check-in code to repository
+		- Jenkins takes latest code from repository
+		- Starts test execution
+		- sends test report vis email
+		
+	Maven Project Job
+		- job is a task which is triggered
+		- plugin is required
+		- source code management section
+		- build trigger section
+		- build section
+		- post build section
+		
+GitHub with Jenkins
+	- test script in GitHub
+	- add Github credentials under Source Code Management
+	- Specify Github repository URL
+	- Specify Github branch name
+	- build section
+	- send TestNG report via email
+	

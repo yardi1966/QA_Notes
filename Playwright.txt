@@ -1,0 +1,101 @@
+Playwright
+
+Advantages:
+	1. Reliable E2E Testing
+		- auto-wait capability
+	2. Cross-Browser Compatibility
+		- all major browsers
+	3. Multi-platform support
+		- Windows, MacOS, Linux, mobile
+	4. Supports multiple languages
+		- Java, Python, javascript. c#, TypeScript
+		
+Features:
+	1. Tracing and Debugging
+		- automatic screenshots
+		- test video recording
+		- comprehensive logging
+	2. Network Interception
+		- intercept and validate network calls
+	3. Browser Context Management
+		- save and transfer browser state across test suite
+	4. Codegen Tool
+		- generate test code by recording your actions
+		
+Playwright in VS Code
+
+	Create a new playwright test
+		- right-click on tests folder
+		- create a new file
+		- name it "XXXXXX.spec.js"
+	To run any test:
+		- playwright.config.js file is used
+	Structure:
+	
+	const {test} = require('@playwright/test');
+
+	test('First Playwright test', async function()
+	{
+		//js code here
+		//it's asynchronous
+		//no guarantee it will execute in order
+		//example:
+		//step1 - open browser
+		//step2 - enter u/p
+		//step3 - click button
+		//so in order to execute synchronously you use the keyword "await"
+	});
+	
+	- to use await you must make the function "async"
+		- test('First Playwright test', async function()
+	- can also skip the "function" keyword and write:
+		- test('First Playwright test', async ()=>
+		
+Playwright runs in Headless mode by default
+
+	- use --headed to come out of headless mode so you can see the browsers
+	ex.
+		- PS D:\PlaywrightAutomation> npx playwright test --headed
+		
+	- or edit the use section of the config file with:
+		- headless: false
+
+Multiple tests inside the test folder will run in parallel when executed
+
+Each test inside a test file will run sequentially
+	
+To run only One Test and skip all others use "test.only"
+ex.
+	test.only('First Playwright test', async ()=>
+	
+	useful if you just created a new test case and want to only run it to make sure it's working
+	
+To see a report of a test run use:
+	- PS D:\PlaywrightAutomation> npx playwright show-report
+	
+Example test
+	const {test, expect} = require('@playwright/test');
+	
+	//uses the Page Fixture
+	test('Page Playwright test', async ({page})=>
+    {
+        
+        await page.goto("https://www.google.com");
+        //print page title to console
+        console.log(await page.title());
+		//verify google page title
+        await expect(page).toHaveTitle("Google");
+    
+    });
+	
+Locate Elements and perform actions
+	-  	//identify the username text box element and enter a value using CSS
+		await page.locator('#username').fill("rahulshettyacademy");
+		//identify the password text box element and enter a value using CSS
+		await page.locator(type='password').fill("learning");
+		//identify the sign in button element and click it
+		await page.locator('#signInBtn').click();
+		
+		
+Run a specific test from the tests folder
+	- PS D:\PlaywrightAutomation> npx playwright test /tests/UIBasicsTest.spec.js
