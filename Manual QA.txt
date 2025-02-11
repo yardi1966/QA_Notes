@@ -1,0 +1,235 @@
+Testing Types
+
+Black Box
+	- black-box testing when you do not know the internal architecture or code structure.	
+		- Equivalence Partitioning
+			- Equivalence partitioning is a software testing technique that reduces the number of test cases needed to test a system. It's a black box testing method that divides input data into partitions, or classes, 
+			  of similar values
+			- Benefits: Saves time and effort, Improves test coverage, Helps identify and isolate defects, and Enhances software quality
+			- ex. If a system accepts integers between 1 and 100, the input data can be divided into four partitions: 1–10, 11–50, 51–99, and 100
+		- Boundary value analysis
+			- Boundary value analysis (BVA) is a software testing method that checks the boundaries of data sets for errors. It's a type of black-box testing that helps identify issues that may arise 
+			  from incorrect assumptions about how a system behaves
+			- BVA tests input values at the boundaries of allowable ranges. 
+			- It tests values just below, just above, and at the defined boundaries. 
+			- BVA helps ensure that the system can handle edge cases, which are often where software fails. 
+		- Cause-effect graphing
+		
+White Box
+	- software testing method that examines the internal structure of an application, including its code, infrastructure, and integrations
+	- Testers use their knowledge of the software's internal structure to design test cases.
+	- Testers inspect and verify the software's code, infrastructure, and integrations. 
+	- Test cases are designed to cover as much of the source code as possible. 
+	- The goal is to ensure the code behaves as expected and meets the standard requirements. 
+	
+Integration
+	- software testing phase that combines and tests individual software modules as a group. It's used to ensure that different components of an application work together as expected. 
+	- Integration testing is important because it can help identify issues that are not obvious during unit testing. These issues can include: Mismatched data formats, Incorrect API calls, 
+	- Broken interdependencies, and Defects in the interplay of several application parts
+	
+Functional
+	- verifies that an application's features work as intended
+	- Compares the output of each function to its corresponding requirement
+	- Validates the system's capabilities and interactions with other components
+	- Simulates real-world scenarios to verify how the system behaves
+	- Tests the software's input and output, data manipulation, and user interactions
+	- Unit Testing 
+	- Integration Testing
+	- Regression Testing
+	- System Testing
+	- Smoke Testing
+	- Performance Testing
+	- Stress Testing
+	
+Non-Functional
+	- examines the system's non-functional requirements, which are the system's characteristics or qualities that the client has specifically requested
+	- performance, security, scalability, and usability
+	- examines aspects that are unrelated to the software's functional requirements
+	- assures that the programme is safe, scalable, and fast, and that it will not crash under excessive pressure
+	
+Performance 
+	- method of evaluating how a system performs under a given workload
+	- it assesses the system's stability, speed, scalability, and responsiveness
+	- To identify potential performance issues and bottlenecks
+	- To ensure software functions as expected in various scenarios
+	
+Regression
+	- software testing that ensures that changes to an application don't break existing functionality
+	- It helps identify bugs that might have been introduced when new code is added or an existing bug is fixed 
+	- it helps ensure that previously fixed bugs don't reappear 
+	- It helps maintain software stability 
+	
+Unit
+	- software testing method that involves checking the smallest parts of a program to ensure they are working correctly
+	- A unit test is a block of code that verifies the accuracy of a smaller, isolated block of application code, typically a function or method. 
+	- The unit test is designed to check that the block of code runs as expected, according to the developer's theoretical logic behind it.
+	
+System
+	- type of software testing that assesses the functionality and performance of a software application as a whole. 
+	- It's performed after integration testing and before acceptance testing
+	- examines every component of an application to make sure that they work as a complete and unified whole. A QA team typically conducts system testing after it checks individual modules with functional or 
+	  user story testing and then each component through integration testing
+	- System testing verifies that a software application meets its functional and non-functional requirements. 
+	- It ensures that the software is suitable for delivery to end users
+	
+Acceptance
+	- type of software testing that evaluates a product to ensure it meets user and business requirements before it's released. 
+	- It's the final stage of testing before a product is released to production. 
+	- enables an organization to engage end users in the testing process and gather their feedback to relay to developers
+	- This feedback helps QA identify flaws that it might have missed during the development stage tests, such as unit and functional testing
+	
+Alpha vs Beta testing
+	- Alpha testing is at the developer’s site before release. 
+	- Potential clients conduct beta testing at their websites.
+	
+Verication vs Validation
+	- Verification evaluates the software at the development phase, ascertaining whether or not a product meets the expected requirements
+	- validation evaluates the software after the development phase, making it sure it meets the requirements of the customer
+	
+Testbed
+	- an environment used for testing an application, including the hardware as well as any software needed to run the program to be tested
+	
+Sanity testing
+	- Sanity testing is testing done at the release level to test the main functionalities. It’s also considered an aspect of regression testing
+	
+List the four different test levels
+	- Unit/component/program/module testing
+	- Integration testing
+	- System testing
+	- Acceptance testing
+	
+What’s the difference between a bug and a defect?
+	- A bug is a fault in the software that’s detected during testing time
+	- a defect is a variance between expected results and actual results, after the product goes live.
+	
+What’s GUI testing?
+	- This tests the interface between the software and the end-user. Short for Graphics User Interface.
+	
+When should testing end?
+	- The bug rate has fallen below an agreed-upon level
+	- The testing or release deadlines have arrived
+	- The testing budget is out of funds
+	- A certain percentage of test cases have passed
+	- The alpha or beta testing periods have ended
+	- Code, functionality, or requirements coverage have been met at a declared point
+	
+Why is Software Testing Required?
+	- Software testing is required to ensure the quality and reliability of a software product
+	- Testing helps to uncover any bugs, errors, or other issues in the software so that they can be addressed and fixed before the product is released. 
+	- Testing also ensures that the software meets all the requirements specified by the customer and works as expected. 
+	- Testing helps to ensure that the software is secure and can withstand malicious attacks.
+	
+Explain the procedure for manual testing
+	- identify the scope of testing: The range could be a specific module, functionality, feature, or end-to-end system.
+	- Design test cases: include test scenarios, data, expected results, and all other details necessary to perform the tests
+	- Execute the test cases: execute them to find any discrepancies between the expected and actual results.
+	- Record the results for further analysis
+	
+What is the test case?
+	- A test case is a set of conditions or variables under which a tester will determine whether a software system or one of its features is working as it was originally established for it to do.
+	
+Explain Non functional testing
+	- examines the system's non-functional requirements, which are the system's characteristics or qualities that the client has specifically requested. 
+	- These include performance, security, scalability, and usability.
+	
+advantages of Automated testing
+	- Automated test execution is quick and saves a significant amount of time.
+	- Human mistakes are eliminated during testing when test scripts are carefully prepared
+	- Automation testing uses a lot less resources. 
+	- Test execution requires nearly no time from QAs once the tests have been automated. 
+	- QA bandwidth can be used for other exploratory work.
+	
+What is Regression Testing?
+	- a full or partial selection of already executed test cases that are re-executed to ensure existing functionalities work fine.
+
+What is Test Harness?
+	- A test harness is a collection of software and test data used to put a programme unit to the test by running it under various conditions such as stress, load, 
+	  and data-driven data while monitoring its behaviour and outputs.
+	  
+Differentiate between Positive and Negative Testing 
+	- Positive testing ensures that your software performs as expected. The test fails if an error occurs during positive testing.
+	- In this testing, the tester always looks for a single set of valid data.
+	- Negative testing guarantees that your app can gracefully deal with unexpected user behaviour or incorrect input.
+	- Testers use as much ingenuity as possible when validating the app against erroneous data
+	
+What is a Critical Bug?
+	- A critical bug is one that has the potential to affect the bulk of an application's functioning. 
+	- It indicates that a significant portion of functionality or a critical system component is utterly broken, with no way to proceed.
+	- The application cannot be delivered to end users until the critical bug has been fixed.
+	
+What is Test Closure?
+	- Test Closure is a document that summarises all of the tests performed throughout the software development life cycle, 
+	  as well as a full analysis of the defects fixed and errors discovered.
+	  
+What is API testing?
+	- software testing that entails evaluating application programming interfaces (APIs) to see if they meet functionality, reliability, performance, and security requirements
+	
+What is Acceptance testing?
+	- testing done by a possible end-user or customer to see if the software meets the business requirements and can be used.
+	
+What do you mean by Defect Triage?
+	- Defect triage is a procedure in which defects are prioritised depending on a variety of characteristics such as severity, risk, and the amount of time it will take to fix the fault.
+	- determine the order in which defects should be fixed.
+	
+What is Integration Testing?
+	- Integration testing is performed after unit testing. 
+	- We test a group of linked modules in integration testing. 
+	- Its goal is to identify faults with module interaction.
+	
+What is a stub?
+	- Stubs or dummy modules are used in these circumstances to emulate module behaviour by delivering a hard-coded or predicted result based on the input variables.
+	
+When should you opt for manual testing over automation testing?
+	- Manual testing should be used over automation testing when the tests are particular or require human interpretation. 
+	- Manual testing is also better suited for exploratory testing, usability testing, and testing on multiple operating systems or unique hardware.
+
+What are the phases involved in the Software Testing Life Cycle?
+	- Test Planning
+	- Test Analysis
+	- Test Design
+	- Test Implementation
+	- Test Execution
+	- Test Results Analysis
+	- Test Closure
+	
+What makes a good test engineer?
+	- A good test engineer is detail-oriented and organized, has excellent problem-solving skills, and can produce high-quality work quickly and efficiently. 
+	- also should have strong communication and collaboration skills and be an outstanding team player. 
+	- They also need to be up to date on the latest technologies and software trends and be able to apply them to their testing process.
+	
+What is Defect Cascading in Software Testing?
+	- Defect cascading is a type of software testing issue in which the result of a defect in one part of the system causes other defects or problems to occur in other parts of the system.
+	
+What is the difference between smoke testing and sanity testing?
+	- Smoke testing is a high-level test used to ensure the most critical functions of a software system are working correctly.
+	- Sanity testing is a more specific test used to check that recent changes to a system have not caused any new, unwanted behavior
+	
+How will you determine when to stop testing?
+	- When testing, it is vital to determine when to stop to prevent wasting resources. When deciding when to stop testing, then you should consider the following criteria: 
+	- Desired levels of quality 
+	- Adherence to timelines and budget 
+	- Number of defects found 
+	- Number of test cases that have been completed 
+	- Risk factors associated with the project
+	
+How do you test a product if the requirements are yet to freeze?
+	- best approach is to use an agile development methodology, such as Scrum
+	- The first step would be to hold requirements gathering meetings with all stakeholders to understand the product’s purpose and desired outcomes. 
+	- The next step would be to break up the project into individual, manageable user stories. 
+	- From there, we would prioritize the user stories and assign them to sprint for development. 
+	- As the project progresses, we continually test the product using techniques such as unit tests, integration tests, user acceptance tests, and system testing.
+	- as requirements change, we will update our tests to ensure the product meets the desired outcomes.
+
+What are some best practices that you should follow when writing test cases?
+	- Develop test cases that are clear, concise, and to the point.
+	- Ensure that the test cases challenge the software's functionality in all dimensions.
+	- Make sure that the test cases cover all the requirements.
+	- Develop repeatable test cases that can be automated when necessary.
+	- Develop test cases that are independent of each other.
+	- Use meaningful and descriptive names for test cases.
+	- Record the results of test cases for future reference.
+	- Make sure that the test cases are modular and can be reused.
+	- Perform reviews of the test cases to ensure accuracy and completeness.
+	- Document the test cases in a standard format.
+	
+
